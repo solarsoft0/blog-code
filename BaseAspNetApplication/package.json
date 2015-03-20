@@ -1,0 +1,29 @@
+{
+  "name": "BaseAspNetApplication",
+  "version": "0.0.1-alpha",
+  "description": "My base ASP.NET Application",
+  "main": "Gulpfile.js",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "del": "^1.1.1",
+    "gulp-eslint": "^0.7.0",
+    "gulp-less": "^3.0.2",
+    "main-bower-files": "^2.6.2",
+    "gulp-sourcemaps": "^1.5.1",
+    "gulp-babel": "^4.0.0"
+  },
+  "dependencies": {},
+  "eslintConfig": {
+    "ecmaFeatures": {
+      "modules": true
+    },
+    "rules": {
+      "no-console":  0
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
