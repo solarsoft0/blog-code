@@ -2,3 +2,4 @@
 artifacts/
 bower_components/
 node_modules/
+jspm_packages/

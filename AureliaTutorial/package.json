@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "name": "AureliaTutorial",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.8"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "wwwroot",
+      "lib": "wwwroot",
+      "packages": "wwwroot/jspm_packages"
+    }
+  }
+}
