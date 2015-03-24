@@ -1,0 +1,27 @@
+﻿.flexbox(@direction: row; @wrap: nowrap; @alignment: stretch; @justify: flex-start; @crossalign: flex-start) {
+    display: flex;
+    flex-flow: @direction @wrap;
+    align-content: @alignment;
+    justify-content: @justify;
+    align-items: @crossalign;
+}
+
+.flexitem-grow(@order: 1; @grow: 1; @alignment: auto) {
+    order: @order;
+    flex-grow: 1;
+    align-self: @alignment;
+}
+
+.flexitem-fixedwidth(@order: 1; @width: auto; @alignment: auto) {
+    order: @order;
+    width: @width;
+    flex-basis: @width;
+    align-self: @alignment;
+}
+
+.flexitem-fixedheight(@order: 1; @height: auto; @alignment: auto) {
+    order: @order;
+    height: @height;
+    flex-basis: @height;
+    align-self: @alignment;
+}

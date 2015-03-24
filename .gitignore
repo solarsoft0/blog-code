@@ -3,4 +3,11 @@ artifacts/
 bower_components/
 node_modules/
 jspm_packages/
+bin/
+obj/
+
+# AureliaTutorial Files
 AureliaTutorial/wwwroot/
+
+# BaseAspNetProject Files
+BaseAspNetProject/wwwroot/
