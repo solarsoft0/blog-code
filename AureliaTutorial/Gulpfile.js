@@ -44,9 +44,11 @@ gulp.task('build:css', function () {
 gulp.task("_build", ["build:jspm", "build:js", "build:css", "build:html"]);
 //#endregion
 
+//#region Clean-up Tasks
 gulp.task("_clean", function (cb) {
     del([
         "wwwroot/**"
     ], cb);
-})
+});
+//#endregion
 
