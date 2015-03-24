@@ -1,15 +1,16 @@
-﻿export class Welcome{
-    constructor(){
-        this.heading = 'Welcome to the Aurelia Navigation App!';
-        this.firstName = 'John';
-        this.lastName = 'Doe';
-    }
+﻿import {Router} from 'aurelia-router';
 
-    get fullName(){
-        return `${this.firstName} ${this.lastName}`;
-    }
+export class App {
+    static inject() { return [ Router ]; }
 
-    welcome(){
-        alert(`Welcome, ${this.fullName}!`);
+    constructor(router) {
+        this.router = router;
+        this.router.configure(config => {
+            config.title = 'Aurelia';
+            config.map([
+                { route: ['', 'welcome'], moduleId: 'views/welcome', nav: true, title: 'Welcome' },
+                { route: 'flickr', moduleId: 'views/flickr', nav: true }
+            ]);
+        });
     }
 }
