@@ -4,7 +4,9 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.8",
+    "del": "^1.1",
     "gulp-babel": "^4.0",
+    "gulp-less": "^3.0",
     "gulp-sourcemaps": "^1.5"
   },
   "jspm": {
