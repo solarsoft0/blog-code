@@ -2,7 +2,7 @@
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.AspNet.Diagnostics;
 
-namespace BaseAspNetProject
+namespace $safeprojectname$
 {
     public class Startup
     {

@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "name": "BaseAspNetProject",
+    "name": "$safeprojectname$",
     "private": true,
     "devDependencies": {
         "gulp": "^3.8",
