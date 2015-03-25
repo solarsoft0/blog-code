@@ -1,0 +1,50 @@
+﻿@import (less) "mixins/reset.less";
+
+@loginbox-height: 240px;
+@loginbox-width: 300px;
+
+body {
+    background-color: #666666;
+}
+
+.login-form-outer {
+    border: 1px solid #333333;
+    border-radius: 16px;
+    background: white;
+
+    width: @loginbox-width;
+    min-height: @loginbox-height;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -(@loginbox-width / 2);
+    margin-top: -(@loginbox-height / 2);
+
+    h4 {
+        width: 100%;
+        text-align: center;
+    }
+
+    > .form-horizontal {
+        > .form-group {
+            margin-left: 0;
+            margin-right: 0;
+
+            > .control-label {
+                padding-left: 0;
+            }
+        }
+    }
+
+    .validation-summary-errors {
+        color: red;
+
+        ul {
+            list-style-type:none;
+
+            li {
+                list-style-type: none;
+            }
+        }
+    }
+}

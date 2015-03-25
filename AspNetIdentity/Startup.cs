@@ -56,6 +56,9 @@ namespace AspNetIdentity
             // Serve up the stuff in wwwroot
             app.UseStaticFiles();
 
+            // Authentication and Authorization
+            app.UseIdentity();
+
             // Configure ASP.NET MVC6
             app.UseMvc(routes =>
                 {
