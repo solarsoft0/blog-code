@@ -1,0 +1,31 @@
+{
+    "name": "AspNetIdentity",
+    "private": true,
+    "dependencies": {
+        "bootstrap": "^3.3.4",
+        "jquery": "^2.1.3",
+        "polymer": "^0.5.5",
+        "requirejs": "^2.1.16",
+        "webcomponentsjs": "^0.6.0"
+    },
+    "overrides": {
+        "bootstrap": {
+            "main": "dist/**/*"
+        },
+        "jquery": {
+            "main": "dist/*"
+        },
+        "object-assign": {
+            "main": "index.js"
+        },
+        "polymer": {
+            "main": [ "polymer.{js,min.js,html}", "layout.html" ]
+        },
+        "webcomponentsjs": {
+            "main": [ "webcomponents.{js,min.js}" ]
+        }
+    },
+    "resolutions": {
+        "webcomponentsjs": "^0.6.0"
+    }
+}

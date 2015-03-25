@@ -11,3 +11,6 @@ AureliaTutorial/wwwroot/
 
 # BaseAspNetProject Files
 BaseAspNetProject/wwwroot/
+
+# AspNetIdentity Files
+AspNetIdentity/wwwroot/

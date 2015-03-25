@@ -1,0 +1,9 @@
+﻿{
+    "AdminUser": {
+        "Username": "admin",
+        "Password": "Chang3Me!"
+    },
+    "Database": {
+        "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+}
