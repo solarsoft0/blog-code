@@ -6,6 +6,7 @@ using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.ConfigurationModel;
 
 using AspNetIdentity.Models;
+using AspNetIdentity.Services;
 
 namespace AspNetIdentity
 {
@@ -43,6 +44,9 @@ namespace AspNetIdentity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            // Configure the Email Service
+            EmailService.Instance.SetConfiguration(Configuration);
 
             // ASP.NET MVC6 Service
             services.AddMvc();

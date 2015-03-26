@@ -5,5 +5,13 @@
     },
     "Database": {
         "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+    },
+    "Email": {
+        "From": "ReplaceMe@outlook.com",
+        "Host": "smtp-mail.outlook.com",
+        "Port": "587",
+        "Security": "TLS",
+        "Username": "ReplaceMe@outlook.com",
+        "Password": "ReplaceMe"
     }
 }
