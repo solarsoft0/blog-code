@@ -1,16 +1,5 @@
-﻿.flex(@direction: row; @wrap: nowrap; @justification: flex-start; @alignment: stretch) {
+﻿.flexbox(@direction: row; @wrap: nowrap) {
     display: flex;
+    -ms-flex-flow: @direction @wrap;
     flex-flow: @direction @wrap;
-    justify-content: @justification;
-    align-items: @alignment;
-}
-
-.flex-fixed-width(@width: auto) {
-    width: @width;
-    flex-basis: @width;
-}
-
-.flex-fixed-height(@height: auto) {
-    height: @height;
-    flex-basis: @height;
 }

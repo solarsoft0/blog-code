@@ -5,34 +5,48 @@
     ViewBag.Title = "Register Account";
 }
 
-<div class="login-form-outer">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
-        @Html.ValidationSummary()
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
-            <div class="col-md-8">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+<div class="flex-container">
+    <div class="login-form-outer" id="register">
+        <h4>Register Account</h4>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id="register-form", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                <div class="control-label"><span class="fa fa-envelope"></span></div>
+                <div class="form-control">
+                    @Html.TextBoxFor(m => m.Email)
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })
-            <div class="col-md-8">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            <div class="form-group">
+                <div class="control-label"><span class="fa fa-key"></span></div>
+                <div class="form-control">
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })
-            <div class="col-md-8">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            <div class="form-group">
+                <div class="control-label"><span class="fa fa-key"></span></div>
+                <div class="form-control">
+                    @Html.PasswordFor(m => m.ConfirmPassword)
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-4">
-                <input type="submit" class="btn btn-default" value="Register">
-            </div>
-        </div>
-    }
+            <div class="submit-btn" id="register-btn">Register</div>
+        }
+    </div>
 </div>
+
+@section scripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#register-btn").click(function () {
+                $("#register-form").submit();
+            });
+        });
+    </script>
+}

@@ -65,6 +65,16 @@ namespace AspNetIdentity.Services
             string s;
 
             Debug.WriteLine("EmailConfiguration: Configuring Email Settings");
+            if (config.TryGet("Email:Disabled", out s))
+            {
+                Debug.WriteLine("EmailConfiguration: Disabled field = " + s);
+                if (s.Equals("true"))
+                {
+                    Debug.WriteLine("EmailConfiguration: Disabled is set to true - no email for you!");
+                    return;
+                }
+            }
+
             if (!config.TryGet("Email:From", out s))
             {
                 Debug.WriteLine("EmailConfiguration: No From Address - aborting!");
@@ -152,6 +162,7 @@ namespace AspNetIdentity.Services
                 this.Password = s;
                 this.Authenticated = true;
             }
+
         }
         #endregion
 
@@ -166,7 +177,8 @@ namespace AspNetIdentity.Services
 
             SmtpClient client = new SmtpClient(this.Hostname, this.Port);
             client.EnableSsl = this.Encryption.Equals("TLS");
-            if (this.Authenticated) {
+            if (this.Authenticated)
+            {
                 client.Credentials = new System.Net.NetworkCredential(this.Username, this.Password);
             }
 

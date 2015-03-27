@@ -109,7 +109,7 @@ namespace AspNetIdentity.Controllers
                 Debug.WriteLine("Register: Validating Email Address");
                 if (!IsValidEmail(model.Email))
                 {
-                    Debug.WriteLine(string.Format("Register: Email Address {0} is not valid"));
+                    Debug.WriteLine(string.Format("Register: Email Address is not valid"));
                     ModelState.AddModelError("", "Invalid email address");
                     return View(model);
                 }

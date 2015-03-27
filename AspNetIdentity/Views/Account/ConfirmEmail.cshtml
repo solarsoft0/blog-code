@@ -3,10 +3,12 @@
     ViewBag.Title = "Confirm Email";
 }
 
-<div class="login-form-outer">
-    <h4>Confirmation Successful</h4>
-    <p>
-        Thank you for confirming your email.
-        Please @Html.ActionLink("click here to log in", "Login", "Account", routeValues: null)
-    </p>
+<div class="flex-container">
+    <div class="login-form-outer" id="confirmemail">
+        <h4>Confirmation Successful</h4>
+        <p>
+            Thank you for confirming your email.
+            Please @Html.ActionLink("click here to log in", "Login", "Account", routeValues: null)
+        </p>
+    </div>
 </div>

@@ -5,39 +5,82 @@
     ViewBag.Title = "Log In";
 }
 
-<div class="login-form-outer">
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Use a Local Account to log in.</h4>
-        @Html.ValidationSummary(true)
-        <div class="form-group">
-            @Html.LabelFor(m => m.UserName, new { @class = "col-md-4 control-label" })
-            <div class="col-md-8">
-                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.UserName)
-            </div>
+<div class="flex-container">
+    <div class="login-form-outer" id="login">
+        <div class="login-type-selector">
+            <h4 id="localLoginSelector" class="active">Local</h4>
+            <h4 id="socialLoginSelector">Social</h4>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })
-            <div class="col-md-8">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-1 col-md-7">
-                <div class="checkbox">
-                    @Html.CheckBoxFor(m => m.RememberMe)
-                    @Html.LabelFor(m => m.RememberMe)
+        <div class="login-form-area">
+            <div id="localLogin">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "login-form", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <div class="control-label"><span class="fa fa-envelope"></span></div>
+                        <div class="form-control">
+                            @Html.TextBoxFor(m => m.UserName)
+                            @Html.ValidationMessageFor(m => m.UserName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="control-label"><span class="fa fa-key"></span></div>
+                        <div class="form-control">
+                            @Html.PasswordFor(m => m.Password)
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                    <div class="submit-btn" id="login-btn">Login</div>
+                }
+                <div class="login-form-options">
+                    <div class="register-link">
+                        <a href="/Account/Register">Register<br>Account</a>
+                    </div>
+                    <div class="forgot-link">
+                        <a href="/Account/Forgot">Forgot<br>Password</a>
+                    </div>
                 </div>
             </div>
-            <div class="pull-right col-md-4">
-                <input type="submit" value="Log in" class="btn btn-default" />
+
+            <div id="socialLogin">
+                <h4>COMING SOON!</h4>
             </div>
         </div>
-    }
-    <p>
-        @Html.ActionLink("Register a new user?", "Register")
-    </p>
+    </div>
 </div>
+
+
+@section scripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            function activate(on) {
+                var off = (on === "local") ? "social" : "local",
+                    onSelector = $("#" + on + "LoginSelector"),
+                    offSelector = $("#" + off + "LoginSelector"),
+                    onBlock = $("#" + on + "Login"),
+                    offBlock = $("#" + off + "Login");
+
+                offSelector.removeClass("active");
+                onSelector.addClass("active");
+                offBlock.hide();
+                onBlock.show();
+            }
+
+            activate("local");
+            $("#socialLoginSelector").click(function () { activate("social"); });
+            $("#localLoginSelector").click(function () { activate("local"); });
+            $("#login-btn").click(function () { $("#login-form").submit(); });
+        });
+    </script>
+}
