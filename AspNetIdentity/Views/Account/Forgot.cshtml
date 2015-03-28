@@ -1,0 +1,39 @@
+﻿@model AspNetIdentity.ViewModels.ForgotPasswordViewModel
+
+@{
+    Layout = "~/Views/Layout/LoginPage.cshtml";
+    ViewBag.Title = "Forgot Password";
+}
+
+<div class="flex-container">
+    <div class="login-form-outer" id="register">
+        <h4>Forgot Password</h4>
+        <p>Enter your email below and we will send a link via email so you can reset your password.</p>
+        @using (Html.BeginForm("Forgot", "Account", FormMethod.Post, new { id = "forgot-form", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                <div class="control-label"><span class="fa fa-envelope"></span></div>
+                <div class="form-control">
+                    @Html.TextBoxFor(m => m.Email)
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+            </div>
+            <div class="submit-btn" id="forgot-btn">Email Link</div>
+        }
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#forgot-btn").click(function () {
+                $("#forgot-form").submit();
+            });
+        });
+    </script>
+}
