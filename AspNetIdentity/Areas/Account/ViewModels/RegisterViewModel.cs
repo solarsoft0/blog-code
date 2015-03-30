@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetIdentity.ViewModels
+namespace AspNetIdentity.Areas.Account.ViewModels
 {
-    public class ResetPasswordViewModel
+    public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -19,7 +18,5 @@ namespace AspNetIdentity.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        public string Code { get; set; }
     }
 }

@@ -14,13 +14,9 @@
 <body>
     <div class="container">
         <div class="navbar-header">
-            @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-            {
-                @Html.AntiForgeryToken()
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a></li>
-                </ul>
-            }
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Log Out", "Logout", "Login", new { area = "Account" })</li>
+            </ul>
         </div>
     </div>
     <section id="body">

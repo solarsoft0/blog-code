@@ -134,79 +134,77 @@ form {
     }
 }
 
-#login {
-    .login-type-selector {
-        width: 250px;
-        border-bottom: 1px solid @logindialog-border;
-        height: 37px;
+.login-type-selector {
+    width: 250px;
+    border-bottom: 1px solid @logindialog-border;
+    height: 37px;
 
-        h4 {
-            display: inline-block;
-            float: left;
-            width: 50%;
-            margin: 0;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-            text-align: center;
-            padding-top: 8px;
-            padding-bottom: 8px;
-            border-left: 1px solid @logindialog-border;
-            border-bottom: none;
-            color: @logindialog-border;
-            cursor: pointer;
+    h4 {
+        display: inline-block;
+        float: left;
+        width: 50%;
+        margin: 0;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        text-align: center;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        border-left: 1px solid @logindialog-border;
+        border-bottom: none;
+        color: @logindialog-border;
+        cursor: pointer;
 
-            &.active {
-                border-bottom: 3px solid yellow;
+        &.active {
+            border-bottom: 3px solid yellow;
+            padding-bottom: 4px;
+            color: @logindialog-text;
+        }
+    }
+}
+
+.login-form-area {
+    #localLogin {
+        .login-form-options {
+            height: 50px;
+            width: 100%;
+            display: table;
+            border-top: 1px solid @logindialog-border;
+
+            > div {
+                display: table-cell;
+                width: 50%;
+                text-align: center;
+                vertical-align: middle;
                 padding-bottom: 4px;
+                border-left: 1px solid @logindialog-border;
                 color: @logindialog-text;
+
+                &:hover {
+                    background-color: #9c9;
+                    color: black;
+                }
+            }
+
+            div:first-of-type {
+                border-left: none;
+            }
+
+            a:link, a:hover, a:active, a:visited {
+                color: inherit;
+                text-decoration: none;
+                font-size: 14px;
             }
         }
     }
 
-    .login-form-area {
-        #localLogin {
-            .login-form-options {
-                height: 50px;
-                width: 100%;
-                display: table;
-                border-top: 1px solid @logindialog-border;
+    #socialLogin {
+        display: none;
 
-                > div {
-                    display: table-cell;
-                    width: 50%;
-                    text-align: center;
-                    vertical-align: middle;
-                    padding-bottom: 4px;
-                    border-left: 1px solid @logindialog-border;
-                    color: @logindialog-text;
-
-                    &:hover {
-                        background-color: #9c9;
-                        color: black;
-                    }
-                }
-
-                div:first-of-type {
-                    border-left: none;
-                }
-
-                a:link, a:hover, a:active, a:visited {
-                    color: inherit;
-                    text-decoration: none;
-                    font-size: 14px;
-                }
-            }
-        }
-
-        #socialLogin {
-            display: none;
-
-            h4 {
-                width: 100%;
-                text-align: center;
-                color: white;
-            }
+        h4 {
+            width: 100%;
+            text-align: center;
+            color: white;
         }
     }
 }

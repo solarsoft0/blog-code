@@ -8,8 +8,11 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-      @RenderBody()
-
+    <div class="flex-container">
+        <div class="login-form-outer">
+            @RenderBody()
+        </div>
+    </div>
     <section id="scripts" style="visibility:hidden;">
         @RenderSection("scripts", required: false)
     </section>

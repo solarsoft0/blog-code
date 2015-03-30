@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetIdentity.ViewModels
+namespace AspNetIdentity.Areas.Account.ViewModels
 {
     public class LoginViewModel
     {
@@ -15,6 +15,5 @@ namespace AspNetIdentity.ViewModels
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
-
     }
 }

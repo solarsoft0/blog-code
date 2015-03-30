@@ -1,0 +1,79 @@
+﻿@model AspNetIdentity.Areas.Account.ViewModels.LoginViewModel
+@{ ViewBag.Title = "Log In"; }
+
+
+<div class="login-type-selector">
+    <h4 id="localLoginSelector" class="active">Local</h4>
+    <h4 id="socialLoginSelector">Social</h4>
+</div>
+<div class="login-form-area">
+    <div id="localLogin">
+        @using (Html.BeginForm("Index", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "login-form", area = "Account" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                <div class="control-label"><span class="fa fa-envelope"></span></div>
+                <div class="form-control">
+                    @Html.TextBoxFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label"><span class="fa fa-key"></span></div>
+                <div class="form-control">
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>
+            </div>
+            <div class="submit-btn" id="login-btn">Login</div>
+        }
+        <div class="login-form-options">
+            <div class="register-link">
+                <a href="/Account/Register">Register<br>Account</a>
+            </div>
+            <div class="forgot-link">
+                <a href="/Account/ForgotPassword">Forgot<br>Password</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="socialLogin">
+        <h4>COMING SOON!</h4>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            function activate(on) {
+                var off = (on === "local") ? "social" : "local",
+                    onSelector = $("#" + on + "LoginSelector"),
+                    offSelector = $("#" + off + "LoginSelector"),
+                    onBlock = $("#" + on + "Login"),
+                    offBlock = $("#" + off + "Login");
+
+                offSelector.removeClass("active");
+                onSelector.addClass("active");
+                offBlock.hide();
+                onBlock.show();
+            }
+
+            activate("local");
+            $("#socialLoginSelector").click(function () { activate("social"); });
+            $("#localLoginSelector").click(function () { activate("local"); });
+            $("#login-btn").click(function () { $("#login-form").submit(); });
+        });
+    </script>
+}
