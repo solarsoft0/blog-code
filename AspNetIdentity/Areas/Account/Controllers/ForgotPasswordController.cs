@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AspNetIdentity.Areas.Account.ViewModels;
 using AspNetIdentity.Models;
 using AspNetIdentity.Services;
@@ -11,6 +10,8 @@ namespace AspNetIdentity.Areas.Account.Controllers
     [Area("Account")]
     public class ForgotPasswordController : Controller
     {
+        private static Logger logger = Logger.GetLogger(typeof(ForgotPasswordController).Name);
+
         public ForgotPasswordController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
@@ -36,6 +37,7 @@ namespace AspNetIdentity.Areas.Account.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            logger.Trace("GET /Account/ForgotPassword/Index");
             return View();
         }
 
@@ -47,24 +49,24 @@ namespace AspNetIdentity.Areas.Account.Controllers
         {
             if (ModelState.IsValid)
             {
-                Debug.WriteLine("Forgot: Checking for user ID = " + model.Email);
+                logger.Trace("POST:Index: Checking for user ID = " + model.Email);
                 var user = await UserManager.FindByNameAsync(model.Email);
                 // If the user does not exist or the user has not confirmed their email,
                 // then say we confirmed, but don't actually do anything.
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user)))
                 {
-                    Debug.WriteLine("Forgot: User does not exist - lying to the user");
+                    logger.Trace("POST:Index: User does not exist - lying to the user");
                     return View("ConfirmationRequired");
                 }
 
                 // If we found a user and it's valid, then work out the code and send
                 // it via email.
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user);
-                Debug.WriteLine("Forgot: Code = " + code);
+                logger.Trace("POST:Index: Code = " + code);
                 var callBackUrl = Url.Action("ResetPassword", "ForgotPassword",
                     new { userId = user.Id, code = code, area = "Account" },
                     protocol: Context.Request.Scheme);
-                Debug.WriteLine("Forgot: Link = " + callBackUrl);
+                logger.Trace("POST:Index: Link = " + callBackUrl);
                 await EmailService.Instance.SendEmailAsync(model.Email, "Reset Password",
                     "We received a request to reset your password.  If you did not request a " +
                     "password change, then please dis-regard this email with our apologies.\n\n" +
@@ -73,6 +75,7 @@ namespace AspNetIdentity.Areas.Account.Controllers
             }
 
             // If the model was not valid, re-display the form
+            logger.Error("POST:Index - Model was not valid");
             return View(model);
         }
 
@@ -81,17 +84,17 @@ namespace AspNetIdentity.Areas.Account.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(string userId = null, string code = null)
         {
-            Debug.WriteLine("ResetPassword: Checking for userId = " + userId);
+            logger.Trace("ResetPassword: Checking for userId = " + userId);
             if (userId == null || code == null)
             {
-                Debug.WriteLine("ResetPassword: Invalid Parameters");
+                logger.Trace("ResetPassword: Invalid Parameters");
                 return View("ResetPasswordError");
             }
-            Debug.WriteLine("ResetPassword: Looking for userId");
+            logger.Trace("ResetPassword: Looking for userId");
             var user = await UserManager.FindByIdAsync(userId);
             if (user == null)
             {
-                Debug.WriteLine("ResetPassword: Could not find user");
+                logger.Trace("ResetPassword: Could not find user");
                 return View("ResetPasswordError");
             }
 
@@ -108,27 +111,27 @@ namespace AspNetIdentity.Areas.Account.Controllers
         {
             if (ModelState.IsValid)
             {
-                Debug.WriteLine("ResetPassword: Checking for user = " + model.Email);
+                logger.Trace("ResetPassword: Checking for user = " + model.Email);
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null)
                 {
-                    Debug.WriteLine("ResetPassword: User does not exist - lie to the user");
+                    logger.Trace("ResetPassword: User does not exist - lie to the user");
                     return RedirectToAction("ResetSuccess", "ForgotPassword", new { area = "Account" });
                 }
                 var result = await UserManager.ResetPasswordAsync(user, model.Code, model.Password);
                 if (result.Succeeded)
                 {
-                    Debug.WriteLine("ResetPassword: Password is reset - confirm to the user");
+                    logger.Trace("ResetPassword: Password is reset - confirm to the user");
                     return RedirectToAction("ResetSuccess", "ForgotPassword", new { area = "Account" });
                 }
                 foreach (var error in result.Errors)
                 {
-                    Debug.WriteLine(string.Format("Register: Adding Error: {0}:{1}", error.Code, error.Description));
+                    logger.Trace(string.Format("Register: Adding Error: {0}:{1}", error.Code, error.Description));
                     ModelState.AddModelError("", error.Description);
                 }
                 return View(model);
             }
-            Debug.WriteLine("ResetPassword: Model is invalid - just re-state the form");
+            logger.Trace("ResetPassword: Model is invalid - just re-state the form");
             return View(model);
         }
 
@@ -136,6 +139,7 @@ namespace AspNetIdentity.Areas.Account.Controllers
         [AllowAnonymous]
         public IActionResult ResetSuccess()
         {
+            logger.Trace("ResetSuccess: Displaying Form");
             return View();
         }
     }

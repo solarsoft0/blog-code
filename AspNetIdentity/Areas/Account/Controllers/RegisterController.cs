@@ -14,6 +14,8 @@ namespace AspNetIdentity.Areas.Account.Controllers
     [Area("Account")]
     public class RegisterController : Controller
     {
+        private static Logger logger = Logger.GetLogger(typeof(RegisterController).Name);
+
         public RegisterController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
@@ -39,6 +41,7 @@ namespace AspNetIdentity.Areas.Account.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            logger.Trace("GET:Index - posting form");
             return View();
         }
 
@@ -48,26 +51,27 @@ namespace AspNetIdentity.Areas.Account.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(RegisterViewModel model)
         {
+            logger.Enter("POST:Index");
             if (ModelState.IsValid)
             {
-                Debug.WriteLine("Register: Validating Email Address");
+                logger.Trace("Register: Validating Email Address");
                 if (!IsValidEmail(model.Email))
                 {
-                    Debug.WriteLine(string.Format("Register: Email Address is not valid"));
+                    logger.Trace(string.Format("Register: Email Address is not valid"));
                     ModelState.AddModelError("", "Invalid email address");
                     return View(model);
                 }
 
-                Debug.WriteLine("Register: Creating new ApplicationUser");
+                logger.Trace("Register: Creating new ApplicationUser");
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                Debug.WriteLine(string.Format("Register: New Application User = {0}", user.UserName));
+                logger.Trace(string.Format("Register: New Application User = {0}", user.UserName));
                 var result = await UserManager.CreateAsync(user, model.Password);
-                Debug.WriteLine(string.Format("Register: Registration = {0}", result.Succeeded));
+                logger.Trace(string.Format("Register: Registration = {0}", result.Succeeded));
                 if (result.Succeeded)
                 {
-                    Debug.WriteLine("Register: Sending Email Code");
+                    logger.Trace("Register: Sending Email Code");
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-                    Debug.WriteLine(string.Format("Register: Email for code {0} is {1}", model.Email, code));
+                    logger.Trace(string.Format("Register: Email for code {0} is {1}", model.Email, code));
                     var callBackUrl = Url.Action("ConfirmEmail", "Register",
                         new { userId = user.Id, code = code, area = "Account" },
                         protocol: Context.Request.Scheme);
@@ -81,14 +85,14 @@ namespace AspNetIdentity.Areas.Account.Controllers
                     }
                     catch (SmtpException ex)
                     {
-                        Debug.WriteLine("Could not send email: " + ex.InnerException.Message);
+                        logger.Trace("Could not send email: " + ex.InnerException.Message);
                         ModelState.AddModelError("", "Could not send email");
                         return View(model);
                     }
                 }
                 foreach (var error in result.Errors)
                 {
-                    Debug.WriteLine(string.Format("Register: Adding Error: {0}:{1}", error.Code, error.Description));
+                    logger.Trace(string.Format("Register: Adding Error: {0}:{1}", error.Code, error.Description));
                     ModelState.AddModelError("", error.Description);
                 }
                 return View(model);
@@ -102,38 +106,46 @@ namespace AspNetIdentity.Areas.Account.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
-            Debug.WriteLine("ConfirmEmail: Checking for userId = " + userId);
+            logger.Trace("ConfirmEmail: Checking for userId = " + userId);
             if (userId == null || code == null)
             {
-                Debug.WriteLine("ConfirmEmail: Invalid Parameters");
+                logger.Trace("ConfirmEmail: Invalid Parameters");
                 return View("ConfirmationError");
             }
-            Debug.WriteLine("ConfirmEmail: Looking for userId");
+            logger.Trace("ConfirmEmail: Looking for userId");
             var user = await UserManager.FindByIdAsync(userId);
             if (user == null)
             {
-                Debug.WriteLine("ConfirmEmail: Could not find user");
+                logger.Trace("ConfirmEmail: Could not find user");
                 return View("ConfirmationError");
             }
-            Debug.WriteLine("ConfirmEmail: Found user - checking confirmation code");
+            logger.Trace("ConfirmEmail: Found user - checking confirmation code");
             var result = await UserManager.ConfirmEmailAsync(user, code);
-            Debug.WriteLine("ConfirmEmail: Code Confirmation = " + result.Succeeded.ToString());
+            logger.Trace("ConfirmEmail: Code Confirmation = " + result.Succeeded.ToString());
             return View(result.Succeeded ? "ConfirmationSuccess" : "ConfirmationError");
         }
 
         private bool IsValidEmail(string s)
         {
+            logger.Enter("IsValidEmail", s);
             if (string.IsNullOrEmpty(s))
+            {
+                logger.Error("IsValidEmail - null or empty string");
                 return false;
+            }
 
             // Return true if strIn is in valid e-mail format.
             try
             {
-                return Regex.IsMatch(s, @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
+                logger.Trace("Checking string against regular expression");
+                var b = Regex.IsMatch(s, @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
                       RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+                logger.Trace("Regular Expression {0}", b ? "Match" : "Does not match");
+                return b;
             }
             catch (RegexMatchTimeoutException)
             {
+                logger.Error("Regular Expression Timeout Exception");
                 return false;
             }
         }

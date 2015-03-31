@@ -9,6 +9,8 @@ namespace AspNetIdentity.Services
 
     public class EmailService
     {
+        private static Logger logger = Logger.GetLogger(typeof(EmailService).Name);
+
         #region Properties
         public string FromAddress
         {
@@ -61,45 +63,46 @@ namespace AspNetIdentity.Services
         #region SetConfiguration
         public void SetConfiguration(IConfiguration config)
         {
+            logger.Enter("SetConfiguration");
             this.IsConfigured = false;
             string s;
 
-            Debug.WriteLine("EmailConfiguration: Configuring Email Settings");
+            logger.Trace("EmailConfiguration: Configuring Email Settings");
             if (config.TryGet("Email:Disabled", out s))
             {
-                Debug.WriteLine("EmailConfiguration: Disabled field = " + s);
+                logger.Trace("EmailConfiguration: Disabled field = " + s);
                 if (s.Equals("true"))
                 {
-                    Debug.WriteLine("EmailConfiguration: Disabled is set to true - no email for you!");
+                    logger.Trace("EmailConfiguration: Disabled is set to true - no email for you!");
                     return;
                 }
             }
 
             if (!config.TryGet("Email:From", out s))
             {
-                Debug.WriteLine("EmailConfiguration: No From Address - aborting!");
+                logger.Trace("EmailConfiguration: No From Address - aborting!");
                 return;
             }
             else
             {
-                Debug.WriteLine("EmailConfiguration: From Address = " + s);
+                logger.Trace("EmailConfiguration: From Address = " + s);
                 this.FromAddress = s;
             }
 
             if (!config.TryGet("Email:Host", out s))
             {
-                Debug.WriteLine("EmailConfiguration: No Host Address - aborting!");
+                logger.Trace("EmailConfiguration: No Host Address - aborting!");
                 return;
             }
             else
             {
-                Debug.WriteLine("EmailConfiguration: Host Address = " + s);
+                logger.Trace("EmailConfiguration: Host Address = " + s);
                 this.Hostname = s;
             }
 
             if (!config.TryGet("Email:Port", out s))
             {
-                Debug.WriteLine("EmailConfiguration: No Port - assuming port 25");
+                logger.Trace("EmailConfiguration: No Port - assuming port 25");
                 this.Port = 25;
             }
             else
@@ -109,13 +112,13 @@ namespace AspNetIdentity.Services
                     this.Port = Int32.Parse(s);
                     if (this.Port < 1 || this.Port > 65534)
                     {
-                        Debug.WriteLine("EmailConfiguration: Port " + s + " is out of range - aborting!");
+                        logger.Trace("EmailConfiguration: Port " + s + " is out of range - aborting!");
                         return;
                     }
                 }
                 catch (Exception)
                 {
-                    Debug.WriteLine("EmailConfiguration: Port " + s + " was invalid - aborting!");
+                    logger.Error("EmailConfiguration: Port " + s + " was invalid - aborting!");
                     return;
                 }
 
@@ -123,7 +126,7 @@ namespace AspNetIdentity.Services
 
             if (!config.TryGet("Email:Security", out s))
             {
-                Debug.WriteLine("EmailConfiguration: No Security - assuming TLS");
+                logger.Trace("EmailConfiguration: No Security - assuming TLS");
                 this.Encryption = "TLS";
             }
             else
@@ -131,7 +134,7 @@ namespace AspNetIdentity.Services
                 this.Encryption = s.ToUpper();
                 if (!this.Encryption.Equals("TLS"))
                 {
-                    Debug.WriteLine("EmailConfiguration: Only TLS Security is allowed right now");
+                    logger.Trace("EmailConfiguration: Only TLS Security is allowed right now");
                     this.Encryption = "TLS";
                 }
             }
@@ -140,25 +143,25 @@ namespace AspNetIdentity.Services
 
             if (!config.TryGet("Email:Username", out s))
             {
-                Debug.WriteLine("EmailConfiguration: Authentication Disabled (no username)");
+                logger.Trace("EmailConfiguration: Authentication Disabled (no username)");
                 this.Authenticated = false;
                 return;
             }
             else
             {
-                Debug.WriteLine("EmailConfiguration: Authentication Username Found");
+                logger.Trace("EmailConfiguration: Authentication Username Found");
                 this.Username = s;
             }
 
             if (!config.TryGet("Email:Password", out s))
             {
-                Debug.WriteLine("EmailConfiguration: Authentication Disabled (no password)");
+                logger.Trace("EmailConfiguration: Authentication Disabled (no password)");
                 this.Authenticated = false;
                 return;
             }
             else
             {
-                Debug.WriteLine("EmailConfiguration: Authentication Enabled");
+                logger.Trace("EmailConfiguration: Authentication Enabled");
                 this.Password = s;
                 this.Authenticated = true;
             }
@@ -170,8 +173,8 @@ namespace AspNetIdentity.Services
         {
             if (!this.IsConfigured)
             {
-                Debug.WriteLine("EmailService is not configured");
-                Debug.WriteLine("SendEmailAsync: " + message);
+                logger.Trace("EmailService is not configured");
+                logger.Info("SendEmailAsync: " + message);
                 return Task.FromResult(0);
             }
 
@@ -190,8 +193,8 @@ namespace AspNetIdentity.Services
             mailmsg.Subject = subject;
             mailmsg.SubjectEncoding = System.Text.Encoding.UTF8;
 
-            Debug.WriteLine("SendEmailAsync: Sending email to " + email);
-            Debug.WriteLine("SendEmailAsync: " + message);
+            logger.Trace("SendEmailAsync: Sending email to " + email);
+            logger.Trace("SendEmailAsync: " + message);
             return client.SendMailAsync(mailmsg);
         }
 

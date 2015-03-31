@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AspNetIdentity.Areas.Account.ViewModels;
 using AspNetIdentity.Models;
+using AspNetIdentity.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 
@@ -9,6 +10,8 @@ namespace AspNetIdentity.Areas.Account.Controllers
     [Area("Account")]
     public class LoginController : Controller
     {
+        private static Logger logger = Logger.GetLogger(typeof(LoginController).Name);
+
         public LoginController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
@@ -34,6 +37,7 @@ namespace AspNetIdentity.Areas.Account.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            logger.Trace("GET:Index: Displaying the form");
             return View();
         }
 
@@ -43,47 +47,58 @@ namespace AspNetIdentity.Areas.Account.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(LoginViewModel model, string returnUrl = null)
         {
+            logger.Trace("POST:Index: Checking ModelState is Valid");
             ViewBag.ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
+                logger.Trace("POST:Index: Model is valid - checking password");
                 var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
                 if (result.Succeeded)
                 {
+                    logger.Trace("POST:Index: Login for {0} is successful - redirecting", model.UserName);
                     if (Url.IsLocalUrl(returnUrl))
                     {
+                        logger.Trace("POST:Index: redirecting to {0}", returnUrl);
                         return Redirect(returnUrl);
                     }
                     else
                     {
+                        logger.Trace("POST:Index: redirecting to /Home/Index");
                         return RedirectToAction("Index", "Home");
                     }
                 }
                 if (result.IsLockedOut)
                 {
+                    logger.Error("POST:Index: Error for {0} - locked out", model.UserName);
                     ModelState.AddModelError("", "Locked Out");
                 }
                 else if (result.IsNotAllowed)
                 {
+                    logger.Error("POST:Index: Error for {0} - not allowed", model.UserName);
                     ModelState.AddModelError("", "Not Allowed");
                 }
                 else if (result.RequiresTwoFactor)
                 {
+                    logger.Error("POST:Index: Error for {0} - 2factor auth required", model.UserName);
                     ModelState.AddModelError("", "Requires Two-Factor Authentication");
                 }
                 else
                 {
+                    logger.Error("POST:Index: Error for {0} - invalid username or password", model.UserName);
                     ModelState.AddModelError("", "Invalid username or password.");
                 }
+                logger.Error("POST:Index: Something went wrong - reposting form");
                 return View(model);
             }
 
-            // If we got this far, something failed - redisplay the form
+            logger.Error("POST:Index: Model was not valid - reposting form");
             return View(model);
         }
 
         // (GET|POST): /Account/Login/Logout
         public IActionResult Logout()
         {
+            logger.Info("Post:Logout");
             SignInManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
