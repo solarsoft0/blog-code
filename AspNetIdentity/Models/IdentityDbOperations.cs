@@ -57,7 +57,7 @@ namespace AspNetIdentity.Models
             if (user == null)
             {
                 logger.Trace("CreateAdminUser: User does not exist - creating");
-                user = new ApplicationUser { UserName = options.DefaultAdminUserName };
+                user = new ApplicationUser { UserName = options.DefaultAdminUserName, DisplayName = "Administrator" };
                 var userCreationResult = await userManager.CreateAsync(user, options.DefaultAdminPassword);
                 DumpIdentityResult("CreateAdminUser: User Creation", userCreationResult);
                 if (userCreationResult.Succeeded)

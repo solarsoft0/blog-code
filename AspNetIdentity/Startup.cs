@@ -50,6 +50,9 @@ namespace AspNetIdentity
 
             // ASP.NET MVC6 Service
             services.AddMvc();
+
+            // Add a Transient Service
+            services.AddTransient<UserProfile>();
         }
 
         public void Configure(IApplicationBuilder app)
