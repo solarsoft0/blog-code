@@ -1,5 +1,9 @@
-﻿export class Login {
+﻿import {LogManager} from "aurelia-framework";
+
+var logger = LogManager.getLogger("app/account/login");
+
+export class Login {
     constructor() {
-        console.debug("[Login::constructor]");
+        logger.debug("[Login::constructor]");
     }
 }

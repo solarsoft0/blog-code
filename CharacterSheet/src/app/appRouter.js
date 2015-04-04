@@ -1,18 +1,53 @@
-﻿import {Router, Redirect} from 'aurelia-router';
-import {Container} from 'aurelia-dependency-injection';
+﻿import {Router, Redirect} from "aurelia-router";
+import {Container} from "aurelia-dependency-injection";
+import {LogManager} from "aurelia-framework";
+
+var logger = LogManager.getLogger("app/appRouter");
+
+class LoginPipelineHandler {
+    static inject() {
+        logger.debug("[LoginPipelineHandler::inject]");
+        return [];
+    }
+
+    constructor() {
+        logger.debug("[LoginPipelineHandler::constructor]");
+    }
+
+    run(routingContext, next) {
+        logger.debug("[LoginPipelineHandler::run]: routingContext = %o", routingContext);
+
+        // If anonymous is set to true, then go to next instruction automatically
+        if (routingContext.nextInstructions.some(i => i.config.anonymous)) {
+            logger.debug("[LoginPipelineHandler::run]: Anonymous page requested - return next()");
+            return next();
+        } else {
+            logger.debug("[LoginPipelineHandler::run]: Authenticated page requested");
+            var isLoggedIn = false; // We are not logged in (always)
+            logger.debug("[LoginPipelineHandler::run]: isLoggedIn = %o", isLoggedIn);
+            if (!isLoggedIn) {
+                logger.debug("[LoginPipelineHandler::run]:: Redirect to login route");
+                return next.cancel(new Redirect("login"));
+            }
+        }
+        logger.debug("[LoginPipelineHandler::run]: Authentication OK - return next()");
+        return next();
+    }
+}
 
 export class AppRouter {
+
     static inject() {
-        console.debug("[AppRouter::inject]");
+        logger.debug("[AppRouter::inject]");
         return [ Router ];
     }
 
     constructor(router) {
-        console.debug("[AppRouter::constructor]");
+        logger.debug("[AppRouter::constructor]");
         this.router = router;
         this.router.configure(config => {
             config.title = "Aurelia Character Sheet";
-            config.addPipelineStep('authorize', LoginPipelineHandler);
+            config.addPipelineStep("authorize", LoginPipelineHandler);
             config.map([
                 /* Area: Account */
                 { route: "login", moduleId: "app/account/login", anonymous: true, title: "Login" },
@@ -27,30 +62,4 @@ export class AppRouter {
     }
 }
 
-class LoginPipelineHandler {
-    static inject() {
-        console.debug("[LoginPipelineHandler::inject]");
-        return [];
-    }
 
-    constructor() {
-        console.debug("[LoginPipelineHandler::constructor]");
-    }
-
-    run(routingContext, next) {
-        console.debug("[LoginPipelineHandler::run]: routingContext = %o", routingContext);
-        console.debug("[LoginPipelineHandler::run]: next = %o", next);
-
-        // If anonymous is set to true, then go to next instruction automatically
-        if (routingContext.nextInstructions.some(i => i.config.anonymous)) {
-            return next();
-        } else {
-            var isLoggedIn = false; // We are not logged in (always)
-            if (!isLoggedIn) {
-                return next.cancel(new Redirect("login"));
-            }
-        }
-
-        return next();
-    }
-}

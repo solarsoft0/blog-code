@@ -2,6 +2,7 @@
     autoprefixer = require("gulp-autoprefixer"),
     babel = require("gulp-babel"),
     clean = require("gulp-clean"),
+    eslint = require("gulp-eslint"),
     less = require("gulp-less"),
     minifyCSS = require("gulp-minify-css"),
     sourcemaps = require("gulp-sourcemaps"),
@@ -17,11 +18,25 @@ gulp.task("build:html", function () {
         .pipe(gulp.dest("wwwroot"));
 });
 
-gulp.task("build:js", function () {
+gulp.task("build:lintjs", function () {
+    return gulp.src(["src/**/*.js", "!src/config.js"])
+        .pipe(eslint({
+            envs: {
+                browser: true,
+                es6: true
+            },
+            ecmaFeatures: {
+                modules: true
+            }
+        }))
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError());
+});
+
+gulp.task("build:js", [ "build:lintjs" ], function () {
     return gulp.src(["src/**/*.js", "!src/config.js"])
         .pipe(sourcemaps.init())
         .pipe(babel({ modules: "system" }))
-        .pipe(uglify())
         .pipe(sourcemaps.write({ includeContent: false, sourceRoot: "/src/" }))
         .pipe(gulp.dest("wwwroot"));
 });
