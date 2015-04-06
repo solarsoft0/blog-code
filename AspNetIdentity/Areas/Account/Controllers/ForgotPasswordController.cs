@@ -51,12 +51,16 @@ namespace AspNetIdentity.Areas.Account.Controllers
             {
                 logger.Trace("POST:Index: Checking for user ID = " + model.Email);
                 var user = await UserManager.FindByNameAsync(model.Email);
-                // If the user does not exist or the user has not confirmed their email,
-                // then say we confirmed, but don't actually do anything.
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user)))
+                // If the user does not exist then say we confirmed, but don't actually do anything.
+                if (user == null)
                 {
                     logger.Trace("POST:Index: User does not exist - lying to the user");
                     return View("ConfirmationRequired");
+                }
+                // If the user is not confirmed, then the user can be registered just like normal.
+                if (!user.EmailConfirmed) {
+                    logger.Trace("POST:Index: User is not confirmed - redirect to the Registration page");
+                    return RedirectToAction("Index", "Register");
                 }
 
                 // If we found a user and it's valid, then work out the code and send

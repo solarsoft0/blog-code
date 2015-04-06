@@ -62,8 +62,24 @@ namespace AspNetIdentity.Areas.Account.Controllers
                     return View(model);
                 }
 
+                // Check to see if the user is confirmed or not. If the user is not
+                // confirmed yet, then assume that the registration failed somehow,
+                // delete the user and restart all over again.
+                var user = await UserManager.FindByNameAsync(model.Email);
+                if (user != null) {
+                    logger.Trace("User {0} already exists - checking for confirmation", model.Email);
+                    // If not confirmed and not an admin
+                    if (!user.EmailConfirmed && !model.Email.Equals("admin")) {
+                        logger.Trace("User {0} is not confirmed - resetting registration by deleting user", model.Email);
+                        var deleted = await UserManager.DeleteAsync(user);
+                        if (!deleted.Succeeded) {
+                            logger.Error("Could not delete user {0}", model.Email);
+                        }
+                    }
+                }
+
                 logger.Trace("Register: Creating new ApplicationUser");
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 logger.Trace(string.Format("Register: New Application User = {0}", user.UserName));
                 var result = await UserManager.CreateAsync(user, model.Password);
                 logger.Trace(string.Format("Register: Registration = {0}", result.Succeeded));

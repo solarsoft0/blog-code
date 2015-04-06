@@ -51,7 +51,20 @@ namespace AspNetIdentity.Areas.Account.Controllers
             ViewBag.ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                logger.Trace("POST:Index: Model is valid - checking password");
+                logger.Trace("POST:Index - does user exist? finding the user");
+                var user = await UserManager.FindByNameAsync(model.UserName);
+                if (user == null) {
+                    logger.Trace("POST:Index - user is not found");
+                    ModelState.AddModelError("", "Invalid username or password.");
+                    return View(model);
+                }
+                if (!user.EmailConfirmed) {
+                    logger.Trace("POST:Index - user does not have a confirmed email");
+                    ModelState.AddModelError("", "Invalid username or password");
+                    return View(model);
+                }
+
+                logger.Trace("POST:Index - checking password");
                 var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
                 if (result.Succeeded)
                 {
