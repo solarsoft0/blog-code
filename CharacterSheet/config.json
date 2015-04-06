@@ -1,0 +1,10 @@
+﻿{
+    "Mode": {
+        "Development": "true"
+    },
+    "Database": {
+        "Instance": "(localdb)\\mssqllocaldb",
+        "Name": "CharSheet",
+        "Options": "Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+}

@@ -1,0 +1,17 @@
+﻿@model CharacterSheet.Areas.Account.ViewModels.ForgotPasswordVM
+@{ ViewBag.Title = "Forgot Password"; }
+
+<h4>Forgot Password</h4>
+<p>Enter your email below and we will send a link via email so you can reset your password.</p>
+@using (Html.BeginForm("Index", "ForgotPassword", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="form-group">
+        <div class="control-label"><span class="fa fa-envelope"></span></div>
+        <div class="form-control">
+            @Html.TextBoxFor(m => m.Email, new { tabIndex = 1, autofocus = true })
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+    </div>
+    <input class="submit-btn" type="submit" name="submit" value="Email Link" tabindex="2">
+}

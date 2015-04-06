@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/jspm_packages/npm/font-awesome@4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/style/login.min.css" rel="stylesheet">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="A D&amp;D 5th Edition Character Sheet Handler" />
+</head>
+<body>
+    <div class="flex-container">
+        <div class="login-form-outer">
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/jspm_packages/github/components/jquery@2.1.3/jquery.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

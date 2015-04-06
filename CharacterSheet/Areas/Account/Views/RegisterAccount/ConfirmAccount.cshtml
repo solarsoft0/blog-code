@@ -1,0 +1,14 @@
+﻿@using CharacterSheet.Services
+@{ ViewBag.Title = "Confirmation Required"; }
+
+<h4>Check Your Email</h4>
+
+<p>
+    We just tried to send you an email with an activation link.  When you receive the
+    email, please click the link to activate your account.
+</p>
+
+@if (WebConfiguration.Instance.DevelopmentMode) {
+<p><strong>DEVELOPMENT MODE:</strong> The link is <a href="@ViewBag.CallbackUrl">here</a></p>
+}
+
