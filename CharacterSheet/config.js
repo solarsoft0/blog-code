@@ -15,7 +15,6 @@ System.config({
 
 System.config({
   "map": {
-    "Polymer/polymer": "github:Polymer/polymer@0.8.0",
     "babel": "npm:babel@4.7.16",
     "babel-runtime": "npm:babel-runtime@4.7.16",
     "font-awesome": "npm:font-awesome@4.3.0",

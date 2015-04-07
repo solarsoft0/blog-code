@@ -1,5 +1,9 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿@{ ViewBag.Title = "Home Page"; }
 
 <h1>Home Controller</h1>
+
+<nolib-helloworld>No Library</nolib-helloworld>
+
+@section htmlelements {
+    <link rel="import" href="~/elements/nolib-helloworld.html">
+}

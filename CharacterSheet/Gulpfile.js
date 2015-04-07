@@ -54,7 +54,6 @@ gulp.task("build:components", [
             strip: true
         }))
         .pipe(gulp.dest("wwwroot/elements"));
-
 });
 
 gulp.task("clean:components", function () {
