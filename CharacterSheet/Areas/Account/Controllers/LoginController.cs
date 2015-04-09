@@ -84,7 +84,7 @@ namespace CharacterSheet.Areas.Account.Controllers
                 if (Url.IsLocalUrl(returnUrl))
                     return Redirect(returnUrl);
                 else
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { area = "Main" });
             }
 
             if (result.IsLockedOut)

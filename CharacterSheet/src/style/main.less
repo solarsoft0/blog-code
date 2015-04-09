@@ -1,0 +1,83 @@
+﻿@import (reference) "mixins/utils.less";
+@import (reference) "mixins/colors.less";
+
+@header-height: 75px;
+@header-font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+html, body {
+    .reset();
+    .fullpage();
+    background-color: #ECECEA;
+}
+
+header {
+    .fixed-header(@header-height);
+    background-color: @color-1;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+
+    > #logo {
+        // Flexbox configuration
+        display: inline-block;
+        order: 1;
+        flex-basis: 450px;
+        width: 450px;
+        // Logo
+        background-image: data-uri("../images/dragon-logo.png");
+        background-size: (@header-height * 0.8) (@header-height * 0.8);
+        background-position: (@header-height * 0.1) (@header-height * 0.1);
+        background-repeat: no-repeat;
+        padding-left: (@header-height * 1.15);
+        // Brand Title
+        color: @color-3;
+        font-family: 'Sigmar One';
+        font-size: (@header-height * 0.4);
+        line-height: (@header-height * 0.4);
+        padding-top: (@header-height * 0.1);
+    }
+
+    > nav {
+        display: inline-block;
+        order: 2;
+        flex-grow: 1;
+
+        > ul {
+            height: @header-height;
+
+            > li {
+                height: 100%;
+                color: @color-4;
+
+                &:hover {
+                    // Override for bootstrap.
+                    background-color: @color-2 !important;
+                }
+
+                a {
+                    height: 100%;
+                    font-family: @header-font;
+                    font-size: (@header-height * 0.33);
+                    // Override for bootstrap
+                    line-height: (@header-height * 0.33) !important;
+                    padding-top: (@header-height * 0.3) !important;
+
+                    &:link, &:visited {
+                        color: @color-4;
+                    }
+
+                    &:hover, &:active, &:focus {
+                        color: @color-4;
+                        // Override for bootstrap
+                        background-color: @color-2 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.flex-container {
+    margin-top: @header-height;
+    padding: 10px 25px;
+}

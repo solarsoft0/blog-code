@@ -95,11 +95,8 @@ namespace CharacterSheet
             logger.Trace("Adding ASP.NET MVC6");
             app.UseMvc(routes =>
             {
-                routes.MapRoute(name: "areaDefault",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
                 routes.MapRoute(name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{area=Main}/{controller=Home}/{action=Index}/{id?}");
             });
 
             // Initialize the Application database
