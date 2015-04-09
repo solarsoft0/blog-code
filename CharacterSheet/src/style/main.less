@@ -1,83 +1,71 @@
 ﻿@import (reference) "mixins/utils.less";
 @import (reference) "mixins/colors.less";
 
-@header-height: 75px;
-@header-font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+@header-height: 65px;
+@logo-font: 'Sigmar One', serif;
+@header-font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
-html, body {
-    .reset();
-    .fullpage();
-    background-color: #ECECEA;
+body {
+    padding-top: (@header-height * 1.2);
 }
 
+//#region Navigation and Header Bar
 header {
-    .fixed-header(@header-height);
+    height: @header-height;
     background-color: @color-1;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: stretch;
 
-    > #logo {
-        // Flexbox configuration
-        display: inline-block;
-        order: 1;
-        flex-basis: 450px;
-        width: 450px;
-        // Logo
-        background-image: data-uri("../images/dragon-logo.png");
-        background-size: (@header-height * 0.8) (@header-height * 0.8);
-        background-position: (@header-height * 0.1) (@header-height * 0.1);
-        background-repeat: no-repeat;
-        padding-left: (@header-height * 1.15);
-        // Brand Title
-        color: @color-3;
-        font-family: 'Sigmar One';
-        font-size: (@header-height * 0.4);
-        line-height: (@header-height * 0.4);
-        padding-top: (@header-height * 0.1);
-    }
+    > .container {
+        height: 100%;
 
-    > nav {
-        display: inline-block;
-        order: 2;
-        flex-grow: 1;
+        .navbar-header {
+            height: 100%;
 
-        > ul {
-            height: @header-height;
-
-            > li {
+            .navbar-brand {
                 height: 100%;
-                color: @color-4;
+                // Background Image
+                background-image: data-uri("../images/dragon-logo.png");
+                background-repeat: no-repeat;
+                background-size: (@header-height * 0.75) (@header-height * 0.75);
+                background-position: 0 (@header-height * 0.125);
+                // Logo Writing
+                font-family: @logo-font;
+                color: @color-3;
+                font-size: (@header-height * 0.4);
+                line-height: (@header-height * 0.4);
+                padding-top: (@header-height * 0.08);
+                padding-left: (@header-height * 0.9);
+            }
 
-                &:hover {
-                    // Override for bootstrap.
-                    background-color: @color-2 !important;
+            button.navbar-toggle {
+                border-color: @color-4;
+                margin-top: (@header-height * 0.21) !important;
+
+                .icon-bar {
+                    background-color: #ececea;
                 }
+            }
+        }
 
-                a {
-                    height: 100%;
-                    font-family: @header-font;
-                    font-size: (@header-height * 0.33);
-                    // Override for bootstrap
-                    line-height: (@header-height * 0.33) !important;
-                    padding-top: (@header-height * 0.3) !important;
+        #navbar {
+            background-color: @color-1;
 
-                    &:link, &:visited {
+            > ul {
+                > li {
+                    height: @header-height !important; // Bootstrap !important override
+
+                    > a {
+                        font-family: @header-font;
+                        font-size: (@header-height * 0.25);
+                        line-height: (@header-height * 0.25);
+                        padding: (@header-height * 0.32) (@header-height * 0.1);
                         color: @color-4;
-                    }
 
-                    &:hover, &:active, &:focus {
-                        color: @color-4;
-                        // Override for bootstrap
-                        background-color: @color-2 !important;
+                        &:hover, &:active, &:focus {
+                            background-color: @color-2;
+                        }
                     }
                 }
             }
         }
     }
-}
-
-.flex-container {
-    margin-top: @header-height;
-    padding: 10px 25px;
 }

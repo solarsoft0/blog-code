@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/jspm_packages/npm/font-awesome@4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/jspm_packages/github/twbs/bootstrap@3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Architects+Daughter">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Sigmar+One">
+
     <link rel="stylesheet" href="~/style/main.css">
+    <link rel="stylesheet" href="~/jspm_packages/github/twbs/bootstrap@3.3.4/css/bootstrap.min.css">
 
     <!-- Required Polyfills -->
     <script src="~/jspm_packages/npm/webcomponents.js@0.6.0/webcomponents-lite.min.js"></script>
@@ -18,30 +19,32 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <header>
-        <div id="logo">Grumpy<br>Wizards</div>
-        <nav class="navbar-collapse collapse">
-            @if (User.Identity.IsAuthenticated) {
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                            <i class="glyphicon glyphicon-user"></i> Administrator <span class="caret"></span>
-                        </a>
-                        <ul id="account-menu" class="dropdown-menu" role="menu">
-                            <li><a href="#">My Profile</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/Account/Login/Logout"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+    <header class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "Main" })">Grumpy<br>Wizards</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated) {
+                        <li><a href="@Url.Action("Index", "Profile", new { area = "Account" })"><i class="glyphicon glyphicon-user"></i> Administrator</a></li>
+                        <li><a href="@Url.Action("Logout", "Login", new { area = "Account" })"><i class="glyphicon glyphicon-log-out"></i> Sign Out</a></li>
+                    } else {
+                        <li><a href="@Url.Action("Index", "RegisterAccount", new { area = "Account" })"><i class="glyphicon glyphicon-user"></i> Register</a></li>
+                        <li><a href="@Url.Action("Index", "Login", new { area = "Account" })"><i class="glyphicon glyphicon-log-in"></i> Sign In</a></li>
+                    }
                 </ul>
-            } else {
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/Account/RegisterAccount"><i class="glyphicon glyphicon-user"></i> Register</a></li>
-                    <li><a href="/Account/Login"><i class="glyphicon glyphicon-log-in"></i> Sign In</a></li>
-                </ul>
-            }
-        </nav>
+            </div>
+        </div>
     </header>
-    <div class="flex-container">
+
+    <div class="flex-container container-fluid">
         @RenderBody()
     </div>
 
