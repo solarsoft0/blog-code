@@ -85,7 +85,6 @@
             return;
         }
 
-        console.log("displayCarousel: displaying carousel element %d", idx);
         for (var i = 0 ; i < this.DIVSET.length ; i++) {
             var el = this.DIVSET[i],
                 marker = this.MARKERS[i];

@@ -1,9 +1,9 @@
 ﻿@{ ViewBag.Title = "Home Page"; }
 
-<div id="#Homepage">
+<div id="Homepage">
     <div class="container-fluid">
         <div class="row">
-            <dnd-carousel interval="5">
+            <dnd-carousel interval="15">
                 <div class="s1"></div>
                 <div class="s2"></div>
                 <div class="s3"></div>
@@ -11,6 +11,31 @@
             </dnd-carousel>
         </div>
     </div>
+
+    @if (User.Identity.IsAuthenticated) {
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="center-block">
+                        <div class="h-image character"></div>
+                    </div>
+                    <p>Create, Share and View your characters</p>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="center-block">
+                        <div class="h-image playerref"></div>
+                    </div>
+                    <p>Player Reference and Tools</p>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="center-block">
+                        <div class="h-image dmref"></div>
+                    </div>
+                    <p>Dungeon Master Reference and Tools</p>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @section htmlelements {
@@ -18,15 +43,23 @@
     <link rel="import" href="~/elements/dnd-carousel.html">
 
     <style>
+        html /deep/ dnd-carousel {
+            height: 450px;
+            width: 100%;
+        }
+
         html /deep/ .s1 {
             background-image: url("/images/backgrounds/homepage-s1.jpg");
         }
+
         html /deep/ .s2 {
             background-image: url("/images/backgrounds/homepage-s2.jpg");
         }
+
         html /deep/ .s3 {
             background-image: url("/images/backgrounds/homepage-s3.jpg");
         }
+
         html /deep/ .s4 {
             background-image: url("/images/backgrounds/homepage-s4.jpg");
         }

@@ -5,7 +5,8 @@
 
 var images = [
     "src/images/**/*.png",
-    "src/images/**/*.jpg"
+    "src/images/**/*.jpg",
+    "src/images/**/*.svg"
 ];
 
 gulp.task("build:images", function () {

@@ -1,0 +1,40 @@
+﻿@import (reference) "mixins/utils.less";
+@import (reference) "mixins/colors.less";
+
+@h-image-dimension: 250px;
+
+#Homepage {
+    .h-image {
+        position: relative;
+        width: @h-image-dimension;
+        height: @h-image-dimension;
+        border-radius: 50%;
+        background-size: @h-image-dimension @h-image-dimension;
+        background-repeat: no-repeat;
+        margin: 20px auto;
+        cursor: pointer;
+
+        &.character {
+            background-image: data-uri("../images/character.png");
+        }
+
+        &.dmref {
+            background-image: data-uri("../images/dmref.png");
+        }
+
+        &.playerref {
+            background-image: data-uri("../images/twenty-sided-dice.svg");
+        }
+
+        &:hover {
+            border: 2px inset #666666;
+        }
+    }
+
+    p {
+        max-width: @h-image-dimension * 1.33;
+        font-size: larger;
+        margin: 20px auto;
+        text-align: center;
+    }
+}
