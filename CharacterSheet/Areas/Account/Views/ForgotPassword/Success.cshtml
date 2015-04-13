@@ -1,5 +1,13 @@
 ﻿@{ ViewBag.Title = "Reset Password"; }
 
-<h4>Password Changed</h4>
-
-<p>Please @Html.ActionLink("click here to login ", "Index", "Home", routeValues: null)</p>
+<div id="Account" class="container">
+    <div class="row">
+        <div class="login-form col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="header">
+                <h4>Password Changed</h4>
+            </div>
+			<p>
+				Please @Html.ActionLink("click here to login ", "Index", "Login",new { area = "Account" })</p>
+		</div>
+	</div>
+</div>

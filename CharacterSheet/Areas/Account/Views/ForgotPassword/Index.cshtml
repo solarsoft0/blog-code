@@ -1,17 +1,39 @@
 ﻿@model CharacterSheet.Areas.Account.ViewModels.ForgotPasswordVM
 @{ ViewBag.Title = "Forgot Password"; }
 
-<h4>Forgot Password</h4>
-<p>Enter your email below and we will send a link via email so you can reset your password.</p>
-@using (Html.BeginForm("Index", "ForgotPassword", FormMethod.Post)) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    <div class="form-group">
-        <div class="control-label"><span class="fa fa-envelope"></span></div>
-        <div class="form-control">
-            @Html.TextBoxFor(m => m.Email, new { tabIndex = 1, autofocus = true })
-            @Html.ValidationMessageFor(m => m.Email)
+<div id="Account" class="container">
+    <div class="row">
+        <div class="login-form col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="header">
+                <h4>Forgot Password</h4>
+            </div>
+            <p>Enter your email below and we will send a link via email so you can reset your password.</p>
+            @using (Html.BeginForm("Index", "ForgotPassword", FormMethod.Post)) {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    <div class="control-label"><span class="fa fa-envelope"></span></div>
+                    <div class="form-control">
+                        @Html.TextBoxFor(m => m.Email, new { tabIndex = 1, autofocus = true })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                </div>
+                <input class="submit-btn" type="submit" name="submit" value="Email Link" tabindex="2">
+            }
         </div>
     </div>
-    <input class="submit-btn" type="submit" name="submit" value="Email Link" tabindex="2">
+</div>
+
+@section scripts {
+<script src="~/jspm_packages/github/jzaefferer/jquery-validation@1.13.1/dist/jquery.validate.min.js"></script>
+<script>
+    $("#Account form").validate({
+        rules: {
+            Email: {
+                required: true,
+                email: true
+            }
+        }
+    });
+</script>
 }

@@ -1,14 +1,20 @@
 ﻿@using CharacterSheet.Services
 @{ ViewBag.Title = "Forgot Password"; }
 
-<h4>Check Your Email</h4>
+<div id="Account" class="container">
+    <div class="row">
+        <div class="login-form col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="header">
+                <h4>Check Your Email</h4>
+            </div>
+			<p>
+			    We have sent a reset password link to your email address.  Please check your email and click
+    			on the link in that email to reset your password.
+			</p>
 
-<p>
-    We have sent a reset password link to your email address.  Please check your email and click
-    on the link in that email to reset your password.
-</p>
-
-@if (WebConfiguration.Instance.DevelopmentMode) {
-    <p><strong>DEVELOPMENT MODE:</strong> The link is <a href="@ViewBag.CallbackUrl">here</a></p>
-}
-
+			@if (WebConfiguration.Instance.DevelopmentMode) {
+				<p><strong>DEVELOPMENT MODE:</strong> The link is <a href="@ViewBag.CallbackUrl">here</a></p>
+			}
+		</div>
+	</div>
+</div>

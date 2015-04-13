@@ -15,7 +15,7 @@ namespace CharacterSheet.Areas.Account.ViewModels
         public string Password { get; set; }
 
         [Required]
-        [Compare("Password", ErrorMessage = "The password and confirmation do not match.")]
+        [Compare("Password", ErrorMessage = "Passwords do not match.")]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
     }

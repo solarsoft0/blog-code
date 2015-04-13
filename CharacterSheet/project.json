@@ -8,9 +8,13 @@
         "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta3",
         "Microsoft.AspNet.Mvc": "6.0.0-beta3",
         "Microsoft.AspNet.Server.IIS": "1.0.0-beta3",
+        "Microsoft.AspNet.Server.WebListener": "1.0.0-beta3",
         "Microsoft.AspNet.StaticFiles": "1.0.0-beta3",
         "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta3",
         "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta3"
+    },
+    "commands": {
+        "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5000"
     },
     "frameworks": {
         "aspnet50": { }

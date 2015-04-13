@@ -16,6 +16,9 @@ gulp.task("javascript:eslint", function () {
             envs: {
                 browser: true,
                 es6: true
+            },
+            globals: {
+                jQuery: true
             }
         }))
         .pipe(eslint.format())

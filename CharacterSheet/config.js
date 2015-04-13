@@ -21,6 +21,7 @@ System.config({
     "bootstrap": "github:twbs/bootstrap@3.3.4",
     "font-awesome": "npm:font-awesome@4.3.0",
     "jquery": "github:components/jquery@2.1.3",
+    "jquery-validation": "github:jzaefferer/jquery-validation@1.13.1",
     "webcomponents.js": "npm:webcomponents.js@0.6.0",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
@@ -59,6 +60,9 @@ System.config({
     },
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
+    },
+    "github:jzaefferer/jquery-validation@1.13.1": {
+      "jquery": "github:components/jquery@2.1.3"
     },
     "github:systemjs/plugin-css@0.1.9": {
       "clean-css": "npm:clean-css@3.1.9",

@@ -9,7 +9,6 @@ body {
     padding-top: (@header-height * 1.2);
 }
 
-//#region Navigation and Header Bar
 header {
     height: @header-height;
     background-color: @color-1;
@@ -57,7 +56,7 @@ header {
                         font-family: @header-font;
                         font-size: (@header-height * 0.25);
                         line-height: (@header-height * 0.25);
-                        padding: (@header-height * 0.32) (@header-height * 0.1);
+                        padding: (@header-height * 0.35) (@header-height * 0.1);
                         color: @color-4;
 
                         &:hover, &:active, &:focus {
@@ -69,3 +68,5 @@ header {
         }
     }
 }
+
+@import (less) "Account.less";

@@ -1,30 +1,67 @@
 ﻿@model CharacterSheet.Areas.Account.ViewModels.RegisterAccountVM
 @{ ViewBag.Title = "Register Account"; }
 
-<h4>Register Account</h4>
-@using (Html.BeginForm("Index", "RegisterAccount", FormMethod.Post)) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    <div class="form-group">
-        <div class="control-label"><span class="fa fa-envelope"></span></div>
-        <div class="form-control">
-            @Html.TextBoxFor(m => m.Email, new { tabIndex = 1, autofocus = true })
-            @Html.ValidationMessageFor(m => m.Email)
+<div id="Account" class="container">
+    <div class="row">
+        <div class="login-form col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="header">
+                <h4>Register Account</h4>
+            </div>
+            @using (Html.BeginForm("Index", "RegisterAccount", FormMethod.Post)) {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group clearfix">
+                    <div class="control-label"><span class="fa fa-envelope"></span></div>
+                    <div class="form-control">
+                        @Html.TextBoxFor(m => m.Email, new { id = "regEmailField", tabIndex = 1, autofocus = true })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <div class="control-label"><span class="fa fa-key"></span></div>
+                    <div class="form-control">
+                        @Html.PasswordFor(m => m.Password, new { id = "regPasswordField", tabIndex = 2 })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label"><span class="fa fa-key"></span></div>
+                    <div class="form-control">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { id = "regConfirmField", tabIndex = 3 })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <input class="submit-btn" type="submit" name="submit" value="Register" tabindex="4">
+                </div>
+            }
         </div>
     </div>
-    <div class="form-group">
-        <div class="control-label"><span class="fa fa-key"></span></div>
-        <div class="form-control">
-            @Html.PasswordFor(m => m.Password, new { tabIndex = 2 })
-            @Html.ValidationMessageFor(m => m.Password)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="control-label"><span class="fa fa-key"></span></div>
-        <div class="form-control">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { tabIndex = 3 })
-            @Html.ValidationMessageFor(m => m.ConfirmPassword)
-        </div>
-    </div>
-    <input class="submit-btn" id="login-btn" type="submit" name="submit" value="Register" tabindex="4">
+</div>
+
+@section scripts {
+<script src="~/jspm_packages/github/jzaefferer/jquery-validation@1.13.1/dist/jquery.validate.min.js"></script>
+<script src="~/js/jquery.validation.complexPassword.js"></script>
+<script>
+    $("#Account form").validate({
+        rules: {
+            Email: {
+                required: true,
+                email: true
+            },
+            Password: {
+                required: true,
+                minlength: 6,
+                maxlength: 128,
+                complexPassword: true
+            },
+            ConfirmPassword: {
+                required: true,
+                minlength: 6,
+                maxlength: 128,
+                equalTo: "#regPasswordField"
+            }
+        }
+    });
+</script>
 }
