@@ -1,30 +1,35 @@
 ﻿@{ ViewBag.Title = "Home Page"; }
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-4 col-sx-12">
-            <dnd-gridcharacter party shared>
-                <img src="~/images/avatars/gnome/wizard.jpg">
-                <h1>Finckeewack<br>Clusterbomb</h1>
-            </dnd-gridcharacter>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-4 col-sx-12">
-            <dnd-gridcharacter party>
-                <img src="~/images/avatars/personal/elminster.png">
-                <h1>Elminster<br>Aumar</h1>
-            </dnd-gridcharacter>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-4 col-sx-12">
-            <dnd-gridcharacter shared>
-                <img src="~/images/avatars/personal/drizzt.jpg">
-                <h1>Drizzt<br>Do'urden</h1>
-            </dnd-gridcharacter>
+<div id="#Homepage">
+    <div class="container-fluid">
+        <div class="row">
+            <dnd-carousel interval="5">
+                <div class="s1"></div>
+                <div class="s2"></div>
+                <div class="s3"></div>
+                <div class="s4"></div>
+            </dnd-carousel>
         </div>
     </div>
 </div>
 
 @section htmlelements {
     <link rel="import" href="/jspm_packages/github/Polymer/polymer@0.8.0/dist/polymer.html">
-    <link rel="import" href="~/elements/dnd-gridcharacter.html">
+    <link rel="import" href="~/elements/dnd-carousel.html">
+
+    <style>
+        html /deep/ .s1 {
+            background-image: url("/images/backgrounds/homepage-s1.jpg");
+        }
+        html /deep/ .s2 {
+            background-image: url("/images/backgrounds/homepage-s2.jpg");
+        }
+        html /deep/ .s3 {
+            background-image: url("/images/backgrounds/homepage-s3.jpg");
+        }
+        html /deep/ .s4 {
+            background-image: url("/images/backgrounds/homepage-s4.jpg");
+        }
+    </style>
 }
 

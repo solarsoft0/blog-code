@@ -1,0 +1,62 @@
+﻿:host {
+    display: block;
+    width: 100%;
+    height: 600px;
+}
+
+#contentwrapper {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    left: 0;
+    top: 0;
+
+    #carousel {
+        > ::content {
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            div {
+                display: block;
+                opacity: 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                transition: opacity 1s ease-in-out;
+                z-index: 1;
+
+                &.active {
+                    opacity: 1;
+                    z-index: 2;
+                }
+            }
+        }
+    }
+
+    #carouselmarkers {
+        position: relative;
+        top: -50px;
+        width: 100%;
+        text-align: center;
+        z-index: 5;
+
+        span.marker {
+            border: 1px solid white;
+            border-radius: 50%;
+            color: white;
+            padding: 0 4px;
+            margin: 0 4px;
+            cursor: pointer;
+
+            &:hover, &.active {
+                border: 1px solid #ff6a00;
+                color: #ff6a00;
+            }
+        }
+    }
+}
