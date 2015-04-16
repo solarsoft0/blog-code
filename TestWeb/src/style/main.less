@@ -1,0 +1,31 @@
+﻿/* Bootstrap Library */
+@import (reference) "../../node_modules/bootstrap-less/bootstrap/index.less";
+/* Site Settings*/
+@import (less) "site.less";
+
+header {
+    /* Bootstrap Requirements */
+    .navbar();
+    .navbar-fixed-top();
+    /* Flexbox Setup */
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    /* Additional styling */
+    height: @header-h;
+    background-color: @color-1;
+
+    > s-logo, > s-navigation-menu {
+        /* Flexbox setup */
+        display: block;
+        flex-grow: 1;
+        height: 100%;
+    }
+}
+
+section#mainContent {
+    /* Bootstrap Requirements */
+    .container-fluid();
+    /* Make sure the content flows behind the header */
+    margin-top: @header-h;
+}

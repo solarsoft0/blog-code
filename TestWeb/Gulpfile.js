@@ -1,8 +1,11 @@
+/// <reference path="wwwroot/jspm_packages/npm/webcomponents.js@0.6.0/webcomponents-lite.min.js" />
+/// <reference path="wwwroot/jspm_packages/npm/webcomponents.js@0.6.0/webcomponents-lite.min.js" />
 /// <binding BeforeBuild='build' Clean='clean' />
 var gulp = require("gulp"),
     autoprefixer = require("gulp-autoprefixer"),
     babel = require("gulp-babel"),
     clean = require("gulp-clean"),
+    concat = require("gulp-concat"),
     exec = require("child_process").exec,
     eslint = require("gulp-eslint"),
     gulpif = require("gulp-if"),
@@ -34,6 +37,14 @@ var paths = {
         polymer: "./wwwroot/jspm_packages/github/Polymer/polymer@0.8.0"
     },
     tmp: "temp",
+    commonhtml: [
+        "s-logo.html"
+    ],
+    commonlibs: [
+        "wwwroot/jspm_packages/github/components/jquery@2.1.3/jquery.min.js",
+        "wwwroot/jspm_packages/github/twbs/bootstrap@3.3.4/bootstrap.min.js",
+        "wwwroot/jspm_packages/npm/webcomponents.js@0.6.0/webcomponents-lite.min.js"
+    ],
     dest: {
         webroot: "wwwroot",
         style: "wwwroot/style",
@@ -81,7 +92,7 @@ var options = {
 };
 //#endregion
 
-gulp.task("build:components", function () {
+gulp.task("build:t_components", function () {
     // Build Component Style sheet
     var v1 = gulp.src(path.join(paths.src.elements, "*.less"))
         .pipe(gulpif(!DEV_MODE, sourcemaps.init()))
@@ -106,16 +117,18 @@ gulp.task("build:components", function () {
     var v3 = gulp.src(path.join(paths.src.elements, "*.html"))
         .pipe(gulp.dest(paths.tmp));
 
+    return merge(v1, v2, v3);
+});
+
+gulp.task("build:components", [ "build:t_components" ], function() {
     // Vulcanize the element
-    var v4 = gulp.src(path.join(paths.tmp, "**", "*.html"))
+    return gulp.src(path.join(paths.tmp, "**", "*.html"))
         .pipe(vulcanize({
             dest: paths.dest.elements,
             inline: true,
             strip: !DEV_MODE
         }))
         .pipe(gulp.dest(paths.dest.elements));
-
-    return merge(v1, v2, v3, v4);
 });
 
 gulp.task("build:webfiles", function () {
@@ -148,7 +161,12 @@ gulp.task("build:webfiles", function () {
         .pipe(sourcemaps.write({ includeContent: false, sourceRoot: "src/" }))
         .pipe(gulp.dest(paths.dest.js));
 
-    return merge(configjs, style, js, images);
+    // Concatenate all the JS Library Polyfills we need
+    var polyfills = gulp.src(paths.commonlibs)
+        .pipe(concat("polyfills.js"))
+        .pipe(gulp.dest(paths.dest.js));
+
+    return merge(configjs, style, js, images, polyfills);
 });
 
 // build:libraries - not normally a part of the process
@@ -170,11 +188,19 @@ gulp.task("build:libraries", function () {
         .pipe(gulp.dest(DEST));
 });
 
-gulp.task("build", ["build:webfiles", "build:components"]);
+gulp.task("build", ["build:webfiles", "build:components"], function () {
+    // Create the common.html vulcanized set of components
+    var commonfiles = paths.commonhtml.map(function (p) { return path.join(paths.dest.elements, p); });
+    // Add the Polymer library to the front of the common elements
+    commonfiles.unshift(path.join(paths.src.polymer, "dist/polymer.html"));
+    return gulp.src(commonfiles)
+        .pipe(concat("common.html"))
+        .pipe(gulp.dest(paths.dest.elements));
+});
 
 //#region CLEAN
 gulp.task("clean", function () {
-    return gulp.src([paths.dest.style, paths.dest.images, paths.dest.js])
+    return gulp.src([paths.dest.style, paths.dest.images, paths.dest.js, paths.dest.elements])
         .pipe(clean());
 });
 //#endregion

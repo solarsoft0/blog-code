@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="~/libraries/polyfills.js"></script>
+    <script src="~/js/polyfills.js"></script>
 
     <link rel="stylesheet" href="~/style/main.css">
     <link rel="import" href="~/elements/common.html">
@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <s-logo></s-logo>
+        <s-logo>Grumpy<br>Wizards</s-logo>
         <s-navigation-menu authenticated="@User.Identity.IsAuthenticated">
             <s-userprofile></s-userprofile>
             <s-signout></s-signout>

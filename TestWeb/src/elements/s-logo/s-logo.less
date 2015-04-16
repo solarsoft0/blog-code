@@ -1,0 +1,30 @@
+﻿@import (reference) "../../style/site.less";
+
+::host {
+    display: block;
+    height: @header-h;
+    margin: 0 20px;
+}
+
+#content {
+    display: block;
+    height: (@header-h * 0.8);
+    padding: (@header-h * 0.1) 20px;
+
+    > #logo {
+        display: inline-block;
+        height: (@header-h * 0.8);
+        width: (@header-h * 0.8);
+        background: data-uri("dragon-logo.png") no-repeat center left;
+        background-size: contain;
+    }
+
+    > #title {
+        display: inline-block;
+        height: 100%;
+        vertical-align: top;
+        font: 24px/26px @logo-font;
+        padding-left: 12px;
+        color: @color-3;
+    }
+}
