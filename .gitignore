@@ -5,17 +5,6 @@ node_modules/
 jspm_packages/
 bin/
 obj/
+temp/
+wwwroot/
 *.user
-
-# AureliaTutorial Files
-AureliaTutorial/wwwroot/
-
-# BaseAspNetProject Files
-BaseAspNetProject/wwwroot/
-
-# AspNetIdentity Files
-AspNetIdentity/wwwroot/
-
-# CharacterSheet Files
-CharacterSheet/wwwroot/
-CharacterSheet/temp/

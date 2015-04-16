@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/libraries/polyfills.js"></script>
+
+    <link rel="stylesheet" href="~/style/main.css">
+    <link rel="import" href="~/elements/common.html">
+
+    @RenderSection("webcomponents", required: false)
+</head>
+<body>
+    <header>
+        <s-logo></s-logo>
+        <s-navigation-menu authenticated="@User.Identity.IsAuthenticated">
+            <s-userprofile></s-userprofile>
+            <s-signout></s-signout>
+            <s-signin></s-signin>
+        </s-navigation-menu>
+    </header>
+    <section id="mainContent">
+        @RenderBody()
+    </section>
+
+    @if (IsSectionDefined("scripts")) {
+        <script src="~/jspm_packages/system.js"></script>
+        <script src="~/config.js"></script>
+        @RenderSection("scripts", required: false)
+    }
+</body>
+</html>
