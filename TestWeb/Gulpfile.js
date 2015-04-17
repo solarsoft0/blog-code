@@ -40,13 +40,11 @@ var paths = {
     commonhtml: [
         "font-awesome.html",
         "s-logo.html",
-        "s-signin.html",
-        "s-signout.html",
-        "s-userprofile.html"
+        "s-menuicon.html"
     ],
     commonlibs: [
         "wwwroot/jspm_packages/github/components/jquery@2.1.3/jquery.min.js",
-        "wwwroot/jspm_packages/github/twbs/bootstrap@3.3.4/bootstrap.min.js",
+        "wwwroot/jspm_packages/npm/bootstrap@3.3.4/bootstrap.min.js",
         "wwwroot/jspm_packages/npm/webcomponents.js@0.6.0/webcomponents-lite.min.js"
     ],
     dest: {

@@ -15,11 +15,20 @@ header {
     height: @header-h;
     background-color: @color-1;
 
-    > s-logo, > s-navigation-menu {
+    > s-logo, > nav {
         /* Flexbox setup */
         display: block;
         flex-grow: 1;
         height: 100%;
+    }
+
+    > nav {
+        .clearfix();
+
+        s-menuicon {
+            float: right;
+            cursor: pointer;
+        }
     }
 }
 
