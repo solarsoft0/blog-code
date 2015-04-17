@@ -38,7 +38,11 @@ var paths = {
     },
     tmp: "temp",
     commonhtml: [
-        "s-logo.html"
+        "font-awesome.html",
+        "s-logo.html",
+        "s-signin.html",
+        "s-signout.html",
+        "s-userprofile.html"
     ],
     commonlibs: [
         "wwwroot/jspm_packages/github/components/jquery@2.1.3/jquery.min.js",
@@ -126,6 +130,9 @@ gulp.task("build:components", [ "build:t_components" ], function() {
         .pipe(vulcanize({
             dest: paths.dest.elements,
             inline: true,
+            excludes: {
+                styles: [ "font-awesome" ]
+            },
             strip: !DEV_MODE
         }))
         .pipe(gulp.dest(paths.dest.elements));

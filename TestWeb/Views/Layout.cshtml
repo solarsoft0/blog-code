@@ -13,11 +13,17 @@
 <body>
     <header>
         <s-logo>Grumpy<br>Wizards</s-logo>
-        <s-navigation-menu authenticated="@User.Identity.IsAuthenticated">
-            <s-userprofile></s-userprofile>
-            <s-signout></s-signout>
-            <s-signin></s-signin>
-        </s-navigation-menu>
+        <s-signin></s-signin>
+        <s-userprofile></s-userprofile>
+        <s-signout></s-signout>
+        <!--<s-navigation-menu>
+            @if (User.Identity.IsAuthenticated) {
+                <s-userprofile></s-userprofile>
+                <s-signout></s-signout>
+            } else {
+                <s-signin></s-signin>
+            }
+        </s-navigation-menu>-->
     </header>
     <section id="mainContent">
         @RenderBody()

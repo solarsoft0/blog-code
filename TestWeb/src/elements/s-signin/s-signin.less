@@ -1,0 +1,38 @@
+﻿@import (reference) "../../style/site.less";
+@import (reference) "../../../wwwroot/jspm_packages/npm/font-awesome@4.3.0/less/font-awesome.less";
+
+::host {
+    display: block;
+    height: 100%;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+#content {
+    display: block;
+    height: 100%;
+    padding: 13px 16px;
+
+    #icon {
+        .fa-icon();
+        display: block;
+        height: 30%;
+        font-size: 24px;
+        vertical-align: bottom;
+        text-align: center;
+        color: @color-4;
+
+        &:before {
+            content: @fa-var-sign-in;
+        }
+    }
+
+    #msg {
+        display: block;
+        height: 16%;
+        font-family: @header-font;
+        font-size: 12px;
+        color: @color-4;
+        text-align: center;
+    }
+}
