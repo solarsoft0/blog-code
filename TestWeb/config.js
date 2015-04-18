@@ -21,6 +21,7 @@ System.config({
     "bootstrap": "npm:bootstrap@3.3.4",
     "font-awesome": "npm:font-awesome@4.3.0",
     "jquery": "github:components/jquery@2.1.3",
+    "lipis/bootstrap-social": "github:lipis/bootstrap-social@4.8.0",
     "webcomponents.js": "npm:webcomponents.js@0.6.0",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"

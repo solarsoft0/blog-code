@@ -26,6 +26,32 @@
         @RenderBody()
     </section>
 
+    @if (User.Identity.IsAuthenticated) {
+
+    } else {
+        <div id="signInModal" class="container-fluid">
+            <h3>Choose Your Social Network</h3>
+            <div class="row">
+                <div class="socialNetwork">
+                    <social-button id="facebook" network="facebook"></social-button>
+                </div>
+                <div class="socialNetwork">
+                    <social-button id="facebook" network="microsoft"></social-button>
+                </div>
+                <div class="socialNetwork">
+                    <social-button id="facebook" network="twitter"></social-button>
+                </div>
+                <div class="socialNetwork">
+                    <social-button id="facebook" network="google"></social-button>
+                </div>
+            </div>
+        </div>
+    }
+    <script>
+        $("s-menuicon[icon=sign-in]").on("click", function () {
+            $("#signInModal").modal();
+        });
+    </script>
     @if (IsSectionDefined("scripts")) {
         <script src="~/jspm_packages/system.js"></script>
         <script src="~/config.js"></script>
