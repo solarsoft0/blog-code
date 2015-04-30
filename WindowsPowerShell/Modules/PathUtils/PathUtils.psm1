@@ -44,3 +44,100 @@ function Add-Path {
 }
 
 Export-ModuleMember -Function Add-Path
+
+function Save-Path {
+    <#
+    .SYNOPSIS
+        Saves the current path to the Environment
+    .DESCRIPTION
+        Add-Path is only temporary.  To make the path permanent,
+        use Set-Path
+    .EXAMPLE
+        Set-Path -Environment User
+    #>
+
+    [CmdletBinding()]
+    param (
+        # Specify the environment that the path should be written to
+        [Parameter()]
+        [ValidateSet("User","Machine")]
+        [string] $Environment = "User"
+    )
+
+    process
+    {
+        $target = [System.EnvironmentVariableTarget]::User
+        if ($Environment -eq "System") {
+            $target = [System.EnvironmentVariableTarget]::Machine
+        }
+
+        [Environment]::SetEnvironmentVariable("Path", $env:Path, $target)
+    }
+}
+
+Export-ModuleMember -Function Save-Path
+
+function Get-Path {
+    <#
+    .SYNOPSIS
+        Gets the current Path (as an array of objects)
+    .DESCRIPTION
+        Returns the list of directories in the current path.  
+    .EXAMPLE
+        Get-Path
+    #>
+
+    [CmdletBinding()]
+    param(
+        
+    )
+
+
+    process
+    {
+        $env:Path.split(";") | Write-Output
+    }
+}
+
+Export-ModuleMember -Function Get-Path
+
+function Set-Path {
+    <#
+    .SYNOPSIS
+        Sets the current path based on the incoming list of directories
+    .DESCRIPTION
+        Given a list of directories, sets the current path to the list of
+        directories
+    .EXAMPLE
+        Get-Path | Select -Unique | Set-Path
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$True,ValueFromPipeline=$True)]
+        [Alias("dir")]
+        [string[]] $Path
+    )
+
+    begin
+    {
+        $cpath = ""
+    }
+
+    process
+    {
+        foreach ($p in $Path) {
+            if ($cpath -ne "") {
+                $cpath += ";";
+            } 
+            $cpath += $p;
+        }    
+    }
+
+    end
+    {
+        $env:Path = $cpath
+        $env:Path | Write-Output
+    }
+}
+
+Export-ModuleMember -Function Set-Path
