@@ -112,3 +112,202 @@ function Invoke-SkytapRESTMethod
         $r.Content | ConvertFrom-Json | Write-Output
     }
 }
+
+<#
+.Synopsis
+   Request a list of templates from the Skytap API
+.DESCRIPTION
+    Using the provided auth token, request a list of templates from the Skytap API
+    and return them as custom objects.
+.EXAMPLE
+    Get-SkytapTemplates -AuthToken $token -Filter "name=Ubuntu Desktop 14.04 - 64-bit"
+.OUTPUTS
+   Outputs a list of PSObjects with the information.
+.COMPONENT
+   Skytap REST API
+#>
+function Get-SkytapTemplates
+{
+    [CmdletBinding()]
+    [OutputType([PSObject])]
+    Param
+    (
+        # The Auth Token - use Get-SkytapAuthToken to generate this
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $AuthToken,
+
+        # Optional filter for the templates.  Use key=value
+        [Parameter()]
+        [string] $Filter = ""
+    )
+
+    Process
+    {
+        $QueryString = ""
+        if ($Filter -ne "") {
+            $QueryString = "?" + [System.Web.HttpUtility]::UrlEncode($Filter)
+        }
+        Invoke-SkytapRESTMethod -AuthToken $AuthToken -Path "/templates$($QueryString)"
+    }
+}
+
+<#
+.Synopsis
+   Request a list of templates from the Skytap API
+.DESCRIPTION
+    Using the provided auth token, create a new skytap environment based
+    on the provided template
+.EXAMPLE
+    New-SkytapEnvironment -AuthToken $token -Template $ubuntu
+.OUTPUTS
+   Outputs a list of PSObjects with the information.
+.COMPONENT
+   Skytap REST API
+#>
+function New-SkytapEnvironment
+{
+    [CmdletBinding()]
+    [OutputType([PSObject])]
+    Param
+    (
+        # The Auth Token - use Get-SkytapAuthToken to generate this
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $AuthToken,
+
+        # Template to be used - object only needs an id field
+        [Parameter(ValueFromPipeline=$true)]
+        $Template
+    )
+
+    Process
+    {
+        Invoke-SkytapRESTMethod -AuthToken $AuthToken -Method POST -Path "/configurations?template_id=$($Template.id)"
+    }
+}
+
+<#
+.Synopsis
+   Request a list of environments from the Skytap API
+.DESCRIPTION
+    Using the provided auth token, request a list of environments from the Skytap API
+    and return them as custom objects.
+.EXAMPLE
+    Get-SkytapEnvironment -AuthToken $token
+.OUTPUTS
+   Outputs a list of PSObjects with the information.
+.COMPONENT
+   Skytap REST API
+#>
+function Get-SkytapEnvironment
+{
+    [CmdletBinding()]
+    [OutputType([PSObject])]
+    Param
+    (
+        # The Auth Token - use Get-SkytapAuthToken to generate this
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $AuthToken,
+
+        # Get a specific environment by ID
+        [Parameter()]
+        [string] $EnvironmentID = ""
+    )
+
+    Process
+    {
+        $QueryString = ""
+        if ($EnvironmentID -ne "") {
+            $QueryString = "/$EnvironmentID"
+        }
+        Invoke-SkytapRESTMethod -AuthToken $AuthToken -Method GET -Path "/configurations$QueryString"
+    }
+}
+
+<#
+.Synopsis
+   Change certain fields on the specified Skytap environment
+.DESCRIPTION
+    Using the provided auth token, change any rw fields from the list
+.EXAMPLE
+    Set-SkytapEnvironment -AuthToken $token -EnvironmentID 3960204 -Name "New Configuration"
+.OUTPUTS
+   Outputs the resulting configuration object
+.COMPONENT
+   Skytap REST API
+#>
+function Set-SkytapEnvironment
+{
+    [CmdletBinding()]
+    [OutputType([PSObject])]
+    Param
+    (
+        # The Auth Token - use Get-SkytapAuthToken to generate this
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $AuthToken,
+
+        # Get a specific environment by ID
+        [Parameter(Mandatory=$true)]
+        [string] $EnvironmentID,
+
+        # Set the friendly name
+        [Parameter()]
+        [string] $Name = $null
+    )
+
+    Process
+    {
+        $QueryString = "/$($EnvironmentID)?"
+        $Sep = "";
+
+        if ($Name -ne $null) {
+            $QueryString = $QueryString + $Sep + "name=" + [System.Web.HttpUtility]::UrlPathEncode($Name);
+            $Sep = "&";
+        }
+        
+        Invoke-SkytapRESTMethod -AuthToken $AuthToken -Method PUT -Path "/configurations$QueryString"
+    }
+}
+
+<#
+.Synopsis
+   Add a template to the specified skytap environment
+.DESCRIPTION
+    Using the provided auth token, merge a template definition into the specified environment.
+    This adds the VMs, but none of the networking characteristics.
+.EXAMPLE
+    Add-SkytapVM -AuthToken $token -EnvironmentID 3960204 -Template $u
+.OUTPUTS
+   Outputs the resulting configuration object
+.COMPONENT
+   Skytap REST API
+#>
+function Add-SkytapVM
+{
+    [CmdletBinding()]
+    [OutputType([PSObject])]
+    Param
+    (
+        # The Auth Token - use Get-SkytapAuthToken to generate this
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $AuthToken,
+
+        # Get a specific environment by ID
+        [Parameter(Mandatory=$true)]
+        [string] $EnvironmentID,
+
+        # Set the friendly name
+        [Parameter(Mandatory=$true)]
+        $Template
+    )
+
+    Process
+    {            
+        $path = "/configurations/$($EnvironmentID)?template_id=$($Template.id)"
+        Invoke-SkytapRESTMethod -AuthToken $AuthToken -Method PUT -Path $path
+    }
+}
