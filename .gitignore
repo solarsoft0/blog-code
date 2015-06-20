@@ -6,5 +6,5 @@ jspm_packages/
 bin/
 obj/
 temp/
-wwwroot/
 *.user
+*.lock.json
