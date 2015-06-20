@@ -41,6 +41,13 @@ section {
     margin: 12px 24px 0 6px;
 }
 
+.navbar-nav li app-authenticator div#app-authenticator {
+    text-align: center;
+    color: #777;
+    cursor: pointer;
+    padding: 4px 3em;
+}
+
 .pictureDetail {
     max-width: 425px;
 }

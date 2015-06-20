@@ -20,6 +20,7 @@ System.config({
     "aurelia-framework": "github:aurelia/framework@0.12.0",
     "aurelia-http-client": "github:aurelia/http-client@0.9.1",
     "aurelia-router": "github:aurelia/router@0.9.0",
+    "auth0/lock": "github:auth0/lock@7.5.6",
     "babel": "npm:babel-core@5.5.8",
     "babel-runtime": "npm:babel-runtime@5.5.8",
     "bootstrap": "github:twbs/bootstrap@3.3.5",
