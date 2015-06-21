@@ -20,6 +20,7 @@ export class Flickr {
         });
     }
 
+
     canDeactivate() {
         if (this.loading) {
             return confirm("Still loading - are you sure?");

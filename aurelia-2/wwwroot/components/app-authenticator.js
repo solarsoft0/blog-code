@@ -41,7 +41,7 @@ var AppAuthenticator = (function () {
         if (auth_token) {
             // We clicked on the sign-out sign
             localStorage.removeItem("auth_token");
-            this.setSignIn();
+            history.go(0);
         }
         else {
             // We clicked on the sign-in sign
