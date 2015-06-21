@@ -12,6 +12,7 @@ export class App {
         config.map([
             { route: 'welcome', name: 'welcome', moduleId: './pages/welcome', nav: true, title: 'Welcome' },
             { route: 'flickr', name: 'flickr', moduleId: './pages/flickr', nav: AuthorizeStep.isLoggedIn(), auth: true, title: 'Flickr' },
+            { route: 'spells', name: 'spells', moduleId: './pages/spells', nav: true, title: 'Spells' },
             { route: '', redirect: 'welcome' },
         ]);
         this.router = router;
