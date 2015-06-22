@@ -40,8 +40,8 @@ namespace aurelia_2
         {
             app.UseErrorPage(ErrorPageOptions.ShowAll);
             app.UseStaticFiles();
+            app.UseJsonWebTokenAuthorization();
             app.UseMvc();
-
         }
     }
 }
