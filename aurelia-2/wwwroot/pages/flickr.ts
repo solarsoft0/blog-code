@@ -1,5 +1,6 @@
 ﻿import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
+import {AppInsights} from '../app';
 
 @inject(HttpClient)
 export class Flickr {
