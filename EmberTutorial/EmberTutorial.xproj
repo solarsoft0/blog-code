@@ -6,15 +6,14 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>ce7fa344-5c10-4771-bdaa-397fd24769bc</ProjectGuid>
-    <RootNamespace>aurelia_2</RootNamespace>
+    <ProjectGuid>eadca2a4-3bc6-4c69-9626-4d5cc44ddd21</ProjectGuid>
+    <RootNamespace>EmberTutorial</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <DevelopmentServerPort>61789</DevelopmentServerPort>
-    <GruntGulpQueried>True</GruntGulpQueried>
+    <DevelopmentServerPort>58248</DevelopmentServerPort>
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
