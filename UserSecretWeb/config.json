@@ -1,0 +1,7 @@
+﻿{
+    "Auth0": {
+        "Domain": "YOUR-DOMAIN.auth0.com",
+        "ClientID": "YOUR-CLIENT-ID",
+        "ClientSecret": "YOUR-CLIENT-SECRET"
+    }
+}
