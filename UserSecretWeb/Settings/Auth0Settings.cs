@@ -1,4 +1,6 @@
-﻿namespace UserSecretWeb.Settings
+﻿using Newtonsoft.Json;
+
+namespace UserSecretWeb.Settings
 {
     public class Auth0Settings
     {
@@ -14,6 +16,7 @@
             set;
         }
 
+        [JsonIgnore]
         public string ClientSecret
         {
             get;

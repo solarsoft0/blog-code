@@ -1,11 +1,13 @@
 ﻿{
     "webroot": "wwwroot",
-    "version": "1.0.0-*",
+    "version": "1.0.0-beta5",
+    "userSecretsId": "UserSecretsDemo",
 
     "dependencies": {
         "Microsoft.AspNet.Mvc": "6.0.0-beta5",
         "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5",
+        "Microsoft.Framework.Configuration.UserSecrets": "1.0.0-beta5",
         "Microsoft.Framework.Configuration.Json": "1.0.0-beta5"
     },
 

@@ -13,8 +13,10 @@ namespace UserSecretWeb
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             var configBuilder = new ConfigurationBuilder(appEnv.ApplicationBasePath);
+
             configBuilder.AddJsonFile("config.json", optional: true);
             configBuilder.AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
+            configBuilder.AddUserSecrets();
             configBuilder.AddEnvironmentVariables();
 
             Configuration = configBuilder.Build();
