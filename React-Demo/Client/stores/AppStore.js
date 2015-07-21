@@ -1,6 +1,8 @@
 ﻿import Store from '../lib/Store';
 import find from 'lodash/collection/find';
 import dispatcher from '../dispatcher';
+import Actions from '../actions';
+import $ from 'jquery';
 
 class AppStore extends Store {
 
@@ -14,6 +16,8 @@ class AppStore extends Store {
           { name: 'spells', title: 'Spells', nav: true, auth: true }
         ]);
         this.initialize('route', this.getNavigationRoute(window.location.hash.substr(1)));
+        this.initialize('images', []);
+        this.initialize('lastFlickrRequest', 0);
     }
 
     onAction(actionType, data) {
@@ -26,6 +30,27 @@ class AppStore extends Store {
                     this.set('route', newRoute);
                     window.location.hash = `#${newRoute}`;
                 }
+                break;
+
+            case 'REQUEST-FLICKR-DATA':
+                let lastRequest = this.get('lastFlickrRequest');
+                let currentTime = Date.now;
+                let fiveMinutes = 5 * 60 * 1000;
+                if ((currentTime - lastRequest) > fiveMinutes) {
+                    return;
+                }
+                $.ajax({
+                    url: 'http://api.flickr.com/services/feeds/photos_public.gne',
+                    data: { tags: data.tag, tagmode: 'any', format: 'json' },
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback'
+                }).done(response => {
+                    Actions.processFlickrData(response);
+                });
+                break;
+
+            case 'PROCESS-FLICKR-DATA':
+                this.set('images', data.items);
                 break;
 
             default:
