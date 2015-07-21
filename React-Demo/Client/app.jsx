@@ -1,4 +1,4 @@
 ﻿import React from 'react';
-import NavBrand from './views/NavBrand.jsx';
+import NavBar from './views/NavBar.jsx';
 
-React.render(<NavBrand/>, document.getElementById('root'));
+React.render(<NavBar/>, document.getElementById('root'));
