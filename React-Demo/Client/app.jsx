@@ -1,11 +1,7 @@
 ﻿import React from 'react';
+import dispatcher from './dispatcher';
 import AppView from './views/AppView.jsx';
 
-var pages = [
-      { name: 'welcome', title: 'Welcome', nav: true, auth: false, default: true },
-      { name: 'flickr', title: 'Flickr', nav: true, auth: false },
-      { name: 'spells', title: 'Spells', nav: true, auth: true }
-];
-var route = 'welcome';
+dispatcher.dispatch('APPINIT');
 
-React.render(<AppView pages={pages} route={route}/>, document.getElementById('root'));
+React.render(<AppView/>, document.getElementById('root'));
