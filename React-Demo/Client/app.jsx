@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import NavBar from './views/NavBar.jsx';
+import AppView from './views/AppView.jsx';
 
 var pages = [
       { name: 'welcome', title: 'Welcome', nav: true, auth: false, default: true },
@@ -8,4 +8,4 @@ var pages = [
 ];
 var route = 'welcome';
 
-React.render(<NavBar pages={pages} route={route}/>, document.getElementById('root'));
+React.render(<AppView pages={pages} route={route}/>, document.getElementById('root'));
