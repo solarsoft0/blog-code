@@ -18,6 +18,10 @@ class AppStore extends Store {
         this.initialize('route', this.getNavigationRoute(window.location.hash.substr(1)));
         this.initialize('images', []);
         this.initialize('lastFlickrRequest', 0);
+        this.initialize('authToken', null);
+        this.initialize('authProfile', null);
+        this.initialize('authSettings', null);
+        this.initialize('spells', []);
     }
 
     onAction(actionType, data) {
@@ -51,6 +55,66 @@ class AppStore extends Store {
 
             case 'PROCESS-FLICKR-DATA':
                 this.set('images', data.items);
+                break;
+
+            case 'LOGIN':
+                if (this.get('authToken') != null) {
+                    this.logger.error('Received LOGIN action, but already logged in');
+                    return;
+                }
+                if (data.authToken == null || data.authProfile == null) {
+                    this.logger.errro('Received LOGIN action with null in the data');
+                    return;
+                }
+                this.logger.info(`Logging in with token=${data.authToken}`);
+                this.set('authToken', data.authToken, true);
+                this.set('authProfile', data.authProfile, true);
+                this.changeStore();
+                break;
+
+            case 'LOGOUT':
+                if (this.get('authToken') == null) {
+                    this.logger.error('Received LOGOUT action, but not logged in');
+                    return;
+                }
+                this.logger.info(`Logging out`);
+                this.set('authToken', null, true);
+                this.set('authProfile', null, true);
+                this.changeStore();
+                break;
+
+            case 'REQUEST-AUTHENTICATED-API':
+                if (this.get('authToken') == null) {
+                    this.logger.error('Received REQUEST-AUTHENTICATED-API without authentication');
+                    return;
+                }
+                let token = this.get('authToken');
+                $.ajax({
+                    url: data.api,
+                    dataType: 'json',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                }).done(response => {
+                    data.callback(response);
+                });
+                break;
+
+            case 'REQUEST-API':
+                $.ajax({
+                    url: data.api,
+                    dataType: 'json'
+                }).done(response => {
+                    data.callback(response);
+                });
+                break;
+
+            case 'PROCESS-SPELLS-DATA':
+                this.logger.info('Received Spells Data: ', data);
+                this.set('spells', data);
+                break;
+
+            case 'PROCESS-SETTINGS-DATA':
+                this.logger.info('Received Settings Data: ', data);
+                this.set('authSettings', data);
                 break;
 
             default:

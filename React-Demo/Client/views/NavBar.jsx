@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import NavBrand from './NavBrand.jsx';
 import NavLinks from './NavLinks.jsx';
+import NavToolbar from './NavToolbar.jsx';
 
 class NavBar extends React.Component {
     render() {
@@ -10,10 +11,10 @@ class NavBar extends React.Component {
                     <NavBrand/>
                 </div>
                 <div className="_navbar _navbar_grow">
-                    <NavLinks pages={this.props.pages} route={this.props.route}/>
+                    <NavLinks pages={this.props.pages} route={this.props.route} authenticated={this.props.authenticated}/>
                 </div>
                 <div className="_navbar">
-
+                    <NavToolbar/>
                 </div>
             </header>
         );
@@ -21,6 +22,7 @@ class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
+    authenticated: React.PropTypes.bool.isRequired,
     pages: React.PropTypes.arrayOf(
             React.PropTypes.shape({
                 auth: React.PropTypes.bool,
