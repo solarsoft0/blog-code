@@ -1,0 +1,4 @@
+wwwroot/
+bower_components/
+node_modules/
+.vs/

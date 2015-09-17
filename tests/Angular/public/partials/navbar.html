@@ -1,0 +1,31 @@
+<header>
+	<div id="brand">
+		<div class="valign-o">
+			<div class="valign-i">
+				<i class="fa fa-home"></i>
+				<span>{{title}}</span>
+			</div>
+		</div>
+	</div>
+	<div id="navigation">
+		<ul>
+			<li ng-class="{ active: isActive('/welcome')}">
+				<a href="#/welcome">Welcome</a>
+			</li>
+			<li ng-class="{ active: isActive('/flickr')}">
+				<a href="#/flickr">Flickr</a>
+			</li>
+			<li ng-class="{ active: isActive('/spells'), 'auth-hide': !isAuthenticated()}">
+				<a href="#/spells">Spells</a>
+			</li>
+		</ul>
+	</div>
+	<div id="toolbar">
+		<ul>
+			<li id="navProfile">{{nickname}}</li>
+			<li id="navSignIn" ng-click="login()">
+				<i class="fa fa-{{icon}}"></i>
+			</li>
+		</ul>
+	</div>
+</header>

@@ -1,0 +1,27 @@
+<template>
+	<header>
+		<div id="brand">
+			<div class="valign-o">
+				<div class="valign-i">
+					<i class="fa fa-home"></i>
+					<span>${router.title}</span>
+				</div>
+			</div>
+		</div>
+		<div id="navigation">
+			<ul>
+				<li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''} ${row.config.auth ? 'authentication' : ''}">
+					<a href.bind="row.href">${row.title}</a>
+				</li>
+			</ul>
+		</div>
+		<div id="toolbar">
+			<ul>
+				<li id="navProfile"></li>
+				<li id="navSignIn" click.trigger="authClick($event)">
+					<i class="fa fa-sign-in"></i>
+				</li>
+			</ul>
+		</div>
+	</header>
+</template>

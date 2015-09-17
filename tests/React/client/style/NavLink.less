@@ -1,0 +1,19 @@
+div._navlink_outer {
+  display: table;
+  height: 100%;
+  cursor: pointer;
+
+  > div._navlink_inner {
+    display: table-cell;
+    height: 100%;
+    vertical-align: middle;
+    align: center;
+    padding: 0 20px;
+    font-size: 20px;
+    font-family: 'Segoe UI', 'Arial Bold', sans-serif;
+
+    &.active {
+      background-color: darkgreen;
+    }
+  }
+}

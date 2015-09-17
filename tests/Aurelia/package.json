@@ -1,0 +1,43 @@
+{
+  "name": "aurelia-test",
+  "version": "1.0.0",
+  "description": "The test application with Aurelia",
+  "private": true,
+  "scripts": {
+    "start": "node ./server.js"
+  },
+  "author": {
+    "name": "Adrian Hall",
+    "email": "adrian@shellmonger.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "csv": "^0.4.5",
+    "express": "^4.13.1",
+    "express-jwt": "^3.0.1",
+    "morgan": "^1.6.1",
+    "serve-static": "^1.10.0"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "public"
+    },
+    "dependencies": {
+      "aurelia-animator-css": "github:aurelia/animator-css@^0.13.0",
+      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.14.0",
+      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.9.0",
+      "aurelia-framework": "github:aurelia/framework@^0.13.2",
+      "aurelia-http-client": "github:aurelia/http-client@^0.10.0",
+      "aurelia-router": "github:aurelia/router@^0.10.1",
+      "bootstrap": "github:twbs/bootstrap@^3.3.5",
+      "core-js": "npm:core-js@^0.9.18",
+      "css": "github:systemjs/plugin-css@^0.1.13",
+      "font-awesome": "npm:font-awesome@^4.3.0"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.1.13",
+      "babel-runtime": "npm:babel-runtime@^5.1.13",
+      "core-js": "npm:core-js@^0.9.4"
+    }
+  }
+}

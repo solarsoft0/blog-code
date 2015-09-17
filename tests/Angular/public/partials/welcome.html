@@ -1,0 +1,16 @@
+<h2>Enter Your Name</h2>
+<form role="form">
+	<div class="form-group">
+		<label for="fn">First Name</label>
+		<input type="text" ng-model="fn" class="form-control" id="fn" placeholder="first name">
+	</div>
+	<div class="form-group">
+		<label for="ln">Last Name</label>
+		<input type="text" ng-model="ln" class="form-control" id="ln" placeholder="last name">
+	</div>
+	<div class="form-group">
+		<label>Full Name</label>
+		<p class="help-block">{{fullName()}}</p>
+	</div>
+	<button id="submit" ng-click="submit()">Submit</button>
+</form>

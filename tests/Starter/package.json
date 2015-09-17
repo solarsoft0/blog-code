@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "name": "Starter",
+  "private": true,
+  "devDependencies": {
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-bower": "^0.0.10",
+    "gulp-load-plugins": "^1.0.0-rc.1"
+  },
+  "gulpConfig": {
+    "src": "./client",
+    "dest": "./wwwroot"
+  }
+}

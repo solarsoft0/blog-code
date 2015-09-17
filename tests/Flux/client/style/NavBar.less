@@ -1,0 +1,29 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  z-index: 90000;
+
+  background-color: green;
+  font-family: 'Segoe UI', Verdana, Arial, sans-serif;
+  font-size: 20px;
+  color: rgba(255,255,255,0.7);
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  > ._navbar {
+    display: block;
+    height: 100%;
+  }
+
+  > ._navbar_grow {
+    flex-grow: 1;
+  }
+}
+
+div#pagehost {
+  margin-top: 60px;
+}

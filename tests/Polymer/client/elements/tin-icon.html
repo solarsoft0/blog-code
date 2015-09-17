@@ -1,0 +1,108 @@
+﻿<!--
+    TIN ELEMENTS (Tin is for My Elements)
+
+    <tin-icon icon="foo"></tin-icon>
+
+    The tin-icon element is for an encapsulation of the Font-Awesome element set
+-->
+<link rel="import" href="../lib/polymer/polymer.html">
+<link rel="import" href="font-awesome.html">
+
+<style>
+    tin-icon {
+        display: block;
+        height: 100%;
+    }
+</style>
+<dom-module id="tin-icon">
+    <template>
+        <style>
+            .tin-icon-outer {
+                display: table;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+                .tin-icon-outer .tin-icon-inner {
+                    display: table-cell;
+                    height: 100%;
+                    margin: 0;
+                    padding: 0;
+                    vertical-align: middle;
+                    text-align: center;
+                }
+        </style>
+        <div id="outer" class="tin-icon-outer">
+            <div class="tin-icon-inner">
+                <i id="icon" class="fa"></i>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: "tin-icon",
+
+            // Attributes
+            properties: {
+                icon: {
+                    type: String,
+                    value: "notch",
+                    reflectToAttribute: true
+                },
+                spin: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true
+                },
+                pulse: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true
+                }
+            },
+
+            // Lifecycle methods
+            created: function () {
+                // We want the font size (and line height) to be set when the height
+                // is available from the CSS being loaded.  There isn't an event for
+                // that case, so let's hope someone actually loads a script at the
+                // bottom of our page.
+                var that = this;
+                window.addEventListener("DOMContentLoaded", function () { that.setFontSize(); });
+                this.addEventListener("resize", function () { that.setFontSize(); });
+            },
+
+            attributeChanged: function (name, type) {
+                this.setClassList();
+            },
+
+            ready: function() {
+                this.setClassList();
+            },
+
+            // API - sets the font-size and line-height properties in the style
+            // based on the height.  A height of 50% is about right for most toolbars.
+            setFontSize: function () {
+                var height = Math.floor(this.$.outer.clientHeight * 0.5);
+                this.$.icon.style.lineHeight = height + "px";
+                this.$.icon.style.fontSize = height + "px";
+            },
+
+            // API - sets the class-list based on icon and spin value
+            setClassList: function () {
+                // Spinner or Pulser (pulse overrides)
+                var spinner = "";
+                if (this.getAttribute("spin") !== null) {
+                    spinner = " fa-spin";
+                }
+                if (this.getAttribute("pulse") !== null) {
+                    spinner = " fa-pulse";
+                }
+
+                this.$.icon.className = "fa fa-" + this.getAttribute("icon") + spinner;
+            }
+        });
+    </script>
+</dom-module>

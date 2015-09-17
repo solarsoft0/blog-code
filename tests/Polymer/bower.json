@@ -1,0 +1,24 @@
+{
+  "name": "Polymer",
+  "private": true,
+  "dependencies": {
+    "font-awesome": "^4.3.0",
+    "jquery": "^2.1.4",
+    "polymer": "^1.0.5"
+  },
+  "overrides": {
+    "jquery": {
+      "main": "dist/jquery.*"
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.*",
+        "fonts/fontawesome-webfont.*",
+        "fonts/FontAwesome.*"
+      ]
+    },
+    "webcomponentsjs": {
+      "main": "webcomponents.*"
+    }
+  }
+}
