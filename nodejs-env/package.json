@@ -1,0 +1,43 @@
+{
+  "name": "node-mobile-backend",
+  "version": "1.0.0",
+  "description": "A test Azure Mobile Apps node backend",
+  "main": "app.js",
+  "scripts": {
+    "prestart": "gulp",
+    "start": "node app.js",
+    "publish": "echo \"Azure Publication not supported yet\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adrianhall/node-mobile-backend"
+  },
+  "author": {
+    "name": "Adrian Hall",
+    "email": "adrian@shellmonger.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adrianhall/node-mobile-backend/issues"
+  },
+  "homepage": "https://github.com/adrianhall/node-mobile-backend",
+  "dependencies": {
+    "azure-mobile-apps": "git://github.com/azure/azure-mobile-apps-node.git",
+    "body-parser": "^1.13.3",
+    "cookie-parser": "^1.3.5",
+    "ejs": "^2.3.3",
+    "express": "^4.13.3",
+    "express-partials": "^0.3.0",
+    "express-session": "^1.11.3",
+    "lodash": "^3.10.1",
+    "log4js": "^0.6.26",
+    "method-override": "^2.3.5",
+    "serve-favicon": "^2.3.0",
+    "serve-static": "^1.10.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-sass": "^2.0.4"
+  }
+}

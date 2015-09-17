@@ -1,0 +1,60 @@
+@import 'colors';
+@import 'fonts';
+
+$transparent-white: rgba(255,255,255,0.8);
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4em;
+  background-color: $color-primary-0;
+  color: $transparent-white;
+  font-family: $sans-font-stack;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+
+  > nav {
+      display: block;
+      height: 100%;
+
+      > ul {
+        display: table;
+        margin: 0;
+        height: 100%;
+
+        > li {
+          display: table-cell;
+          padding: 0 1em;
+          height: 100%;
+          vertical-align: middle;
+
+          > a {
+            color: $transparent-white;
+            text-decoration: none;
+
+            &:hover, &:active {
+              color: white;
+              text-decoration: underline;
+            }
+
+            &:link, &:visited {
+              color: $transparent-white;
+            }
+          }
+        }
+      }
+  }
+}
+
+section#mainpage {
+  margin-top: 4em;
+}
