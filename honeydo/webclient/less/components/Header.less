@@ -1,0 +1,63 @@
+@import '../config.less';
+
+header {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 100%;
+  width: 100%;
+  background-color: @color-primary-0;
+  color: rgba(255,255,255,0.8);
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+
+  > .buttons {
+    display: block;
+    height: 100%;
+
+    > ul {
+      display: table;
+      height: 100%;
+      list-style: none;
+      padding: 0;
+
+      &.left {
+        margin: 0 0 0 16pt;
+      }
+
+      &.right {
+        margin: 0 16pt 0 0;
+      }
+
+      > li {
+          display: table-cell;
+          height: 100%;
+          vertical-align: middle;
+      }
+    }
+  }
+
+  div.title {
+    display: block;
+    flex-grow: 1;
+    height: 100%;
+
+    div.headerTitle {
+      display: table;
+      height: 100%;
+
+      > div {
+        display: table-cell;
+        height: 100%;
+        vertical-align: middle;
+        padding-left: 15pt;
+
+        > h1 {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.addTaskIcon {
+  cursor: pointer;
+}

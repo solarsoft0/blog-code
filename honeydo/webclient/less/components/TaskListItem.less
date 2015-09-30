@@ -1,0 +1,97 @@
+@import '../config.less';
+
+div.taskListItem {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 40pt;
+  border-bottom: 1px solid #333;
+  border-left: 2px solid white;
+
+  &.dirty {
+    border-left: 2px solid red;
+  }
+
+  > div.taskListItem-fixed {
+    display: block;
+    flex-basis: 40pt;
+    width: 40pt;
+    height: 100%;
+  }
+
+  > div.taskListItem-grow {
+    display: block;
+    flex-grow: 1;
+    height: 100%;
+
+    > div.taskListItem-titledate {
+      display: flex;
+      flex-flow: column nowrap;
+      width: 100%;
+      height: 100%;
+
+      > h1, > h2 {
+        display: block;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      > h1 {
+        margin: 1pt 0 1pt 0;
+        flex-basis: 23pt;
+        height: 23pt;
+        width: 100%;
+
+        > input[type=text] {
+          border: 0;
+          font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 15pt;
+          color: #333;
+          width: 100%;
+          height: 23pt;
+
+          &:focus {
+            border-bottom: 1px dotted #333;
+          }
+        }
+      }
+
+      > h2 {
+        flex-basis: 15pt;
+        height: 15pt;
+        font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+        font-size: 10pt;
+        color: #999;
+
+        .rw-datetimepicker {
+          width: 120pt;
+          height: 100%;
+          border: 0 !important;
+          display: inline-block;
+
+          &.rw-state-focus {
+            box-shadow: none;
+            border-bottom: 1px dotted #333;
+          }
+
+          input.rw-input {
+            border: 0;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            font-size: 10pt;
+            color: #999;
+            height: 100%;
+            box-shadow: none;
+          }
+
+          > .rw-select {
+            border: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@import 'AbsoluteCenter.less';
+@import '../../../node_modules/react-widgets/lib/less/react-widgets.less';
