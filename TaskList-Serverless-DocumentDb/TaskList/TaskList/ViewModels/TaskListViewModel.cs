@@ -19,6 +19,10 @@ namespace TaskList.ViewModels
             AddNewItemCommand = new Command(async () => await ExecuteAddNewItemCommand());
 
             RefreshCommand.Execute(null);
+            MessagingCenter.Subscribe<TaskDetailViewModel>(this, "ItemsChanged", async (sender) =>
+            {
+                await ExecuteRefreshCommand();
+            });
         }
 
         ICloudService CloudService { get; }
@@ -29,7 +33,14 @@ namespace TaskList.ViewModels
         public ObservableRangeCollection<TaskItem> Items
         {
             get { return items; }
-            set { SetProperty(ref items, value, "Items"); }
+            set {
+                SetProperty(ref items, value, "Items");
+                if (selectedItem != null)
+                {
+                    Application.Current.MainPage.Navigation.PushAsync(new Pages.TaskDetail(selectedItem));
+                    SelectedItem = null;
+                }
+            }
         }
 
         TaskItem selectedItem = null;
@@ -47,7 +58,8 @@ namespace TaskList.ViewModels
 
             try
             {
-                // Do stuff here
+                var items = await CloudService.GetAllItemsAsync();
+                Items.ReplaceRange(items);
             }
             catch (Exception ex)
             {
@@ -67,7 +79,7 @@ namespace TaskList.ViewModels
 
             try
             {
-                // Do stuff here
+                await Application.Current.MainPage.Navigation.PushAsync(new Pages.TaskDetail());
             }
             catch (Exception ex)
             {
