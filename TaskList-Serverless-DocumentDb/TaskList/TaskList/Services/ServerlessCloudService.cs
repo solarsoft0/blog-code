@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Net;
 
 namespace TaskList.Services
 {
@@ -43,22 +44,37 @@ namespace TaskList.Services
 
         public async Task<List<TaskItem>> GetAllItemsAsync()
         {
-            var query = DocumentClient.CreateDocumentQuery<TaskItem>(
-                CollectionLink,
-                new FeedOptions
-                {
-                    MaxItemCount = -1,
-                    PartitionKey = new PartitionKey(serviceAccess.UserId)
-                })
-                .Where(item => item.Complete == false)
-                .AsDocumentQuery();
-
-            var tlist = new List<TaskItem>();
-            while (query.HasMoreResults)
+            try
             {
-                tlist.AddRange(await query.ExecuteNextAsync<TaskItem>());
+                var query = DocumentClient.CreateDocumentQuery<TaskItem>(
+                    CollectionLink,
+                    new FeedOptions
+                    {
+                        MaxItemCount = -1,
+                        PartitionKey = new PartitionKey(serviceAccess.UserId)
+                    })
+                    .Where(item => item.Complete == false)
+                    .AsDocumentQuery();
+
+                var tlist = new List<TaskItem>();
+                while (query.HasMoreResults)
+                {
+                    tlist.AddRange(await query.ExecuteNextAsync<TaskItem>());
+                }
+                return tlist;
             }
-            return tlist;
+            catch (DocumentClientException ex)
+            {
+                if (ex.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    if (ex.Message.StartsWith("Partition key provided either doesn't correspond to definition in the collection or doesn't match partition key field values specified in the document."))
+                    {
+                        // This means there are no records in the partition, which is perfectly normal
+                        return new List<TaskItem>();
+                    }
+                }
+                throw ex;
+            }
         }
 
         public async Task<TaskItem> InsertItemAsync(TaskItem item)
