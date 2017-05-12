@@ -7,22 +7,28 @@ class Login extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            page: 'Login',
             username: '',
             password: ''
         };
     }
 
-    userLogin (e) {
+    get alt () { return (this.state.page === 'Login') ? 'SignUp' : 'Login'; }
+
+    handleClick (e) {
         this.props.onLogin(this.state.username, this.state.password);
+        e.preventDefault();
+    }
+
+    togglePage (e) {
+        this.setState({ page: this.alt });
         e.preventDefault();
     }
 
     render() {
         return (
             <ScrollView style={{padding: 20}}>
-                <Text style={{fontSize: 27}}>
-                    Login
-                </Text>
+                <Text style={{fontSize: 27}}>{this.state.page}</Text>
                 <TextInput 
                     placeholder='Username' 
                     autoCapitalize='none' 
@@ -39,7 +45,12 @@ class Login extends Component {
                     value={this.state.password} 
                     onChangeText={(text) => this.setState({ password: text })} />
                 <View style={{margin: 7}}/>
-                <Button onPress={(e) => this.userLogin(e)} title="Login"/>
+                <Button onPress={(e) => this.handleClick(e)} title={this.state.page}/>
+                <View style={{margin: 7, flexDirection: 'row', justifyContent: 'center'}}>
+                    <Text onPress={(e) => this.togglePage(e)} style={{fontSize: 12, color: 'blue'}}>
+                        {this.alt}
+                    </Text>
+                </View>
             </ScrollView>
         );
     }
