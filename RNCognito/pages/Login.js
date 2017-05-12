@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, Text, TextInput, View, Button } from 'react-native';
 import { login } from '../redux/actions/auth';
+import { 
+    AuthenticationDetails, 
+    CognitoUser, 
+    CognitoUserAttribute, 
+    CognitoUserPool 
+} from '../lib/aws-cognito-identity';
+
+const awsCognitoSettings = {
+    UserPoolId: 'us-west-2_moekV87yf',
+    ClientId: '3489g29bofm54936iu0kp9fptq'
+};
+
 
 class Login extends Component {
     constructor (props) {
@@ -16,8 +28,50 @@ class Login extends Component {
     get alt () { return (this.state.page === 'Login') ? 'SignUp' : 'Login'; }
 
     handleClick (e) {
-        this.props.onLogin(this.state.username, this.state.password);
         e.preventDefault();
+        const userPool = new CognitoUserPool(awsCognitoSettings);
+
+        // Sign up
+        if (this.state.page === 'SignUp') {
+            const attributeList = [
+                new CognitoUserAttribute({ Name: 'email', Value: this.state.userame })
+            ];
+            userPool.signUp(
+                this.state.username,
+                this.state.password,
+                attributeList,
+                null,
+                (err, result) => {
+                    if (err) {
+                        alert(err);
+                        this.setState({ username: '', password: '' });
+                        return;
+                    }
+                    console.log(`result = ${JSON.stringify(result)}`);
+                    this.props.onLogin(this.state.username, this.state.password);
+                }
+            );
+        } else {
+            const authDetails = new AuthenticationDetails({
+                Username: this.state.username,
+                Password: this.state.password
+            });
+            const cognitoUser = new CognitoUser({
+                Username: this.state.username,
+                Pool: userPool
+            });
+            cognitoUser.authenticateUser(authDetails, {
+                onSuccess: (result) => {
+                    console.log(`access token = ${result.getAccessToken().getJwtToken()}`);
+                    this.props.onLogin(this.state.username, this.state.password);
+                },
+                onFailure: (err) => {
+                    alert(err);
+                    this.setState({ username: '', password: '' });
+                    return;
+                }
+            });
+        }
     }
 
     togglePage (e) {
@@ -30,7 +84,7 @@ class Login extends Component {
             <ScrollView style={{padding: 20}}>
                 <Text style={{fontSize: 27}}>{this.state.page}</Text>
                 <TextInput 
-                    placeholder='Username' 
+                    placeholder='Email Address' 
                     autoCapitalize='none' 
                     autoCorrect={false} 
                     autoFocus={true} 
