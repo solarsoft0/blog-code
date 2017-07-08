@@ -34,7 +34,7 @@ class Login extends Component {
         // Sign up
         if (this.state.page === 'SignUp') {
             const attributeList = [
-                new CognitoUserAttribute({ Name: 'email', Value: this.state.userame })
+                new CognitoUserAttribute({ Name: 'email', Value: this.state.username })
             ];
             userPool.signUp(
                 this.state.username,
