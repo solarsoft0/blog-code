@@ -35,7 +35,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "jquery": "^2.1.4",
+    "jquery": "^3.0.0",
     "koa": "^0.21.0",
     "koa-log4js": "0.0.1",
     "koa-static": "^1.4.9",
